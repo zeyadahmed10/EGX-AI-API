@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>stocks-service</module>
+        <module>scraping-service</module>
     </modules>
     <packaging>pom</packaging>
 
