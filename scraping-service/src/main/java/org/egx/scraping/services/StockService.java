@@ -18,7 +18,7 @@ public class StockService {
     @Autowired
     private StockScraper stockScraper;
     public static final String BASE_URL = "https://www.mubasher.info/markets/EGX/stocks/";
-    public List<Stock> getUpdatedStockList(){
+    public List<Stock> getUpdatedStockList() throws IOException {
         List<Stock> stocks = new ArrayList<Stock>();
         var equities = Utils.readEquities("equities.txt");
         try{
@@ -32,12 +32,14 @@ public class StockService {
             return stocks;
         }catch(IOException ex){
             log.error("Could not connect to the host: "+ex.getMessage());
+            throw new IOException(ex.getMessage());
         }catch (NullPointerException ex){
             log.error(ex.getMessage());
+            throw new NullPointerException(ex.getMessage());
         }
         catch (RuntimeException ex){
             log.error(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
-        return null;
     }
 }
