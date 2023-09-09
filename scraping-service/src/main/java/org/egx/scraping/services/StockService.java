@@ -29,6 +29,7 @@ public class StockService {
                 log.info(stock.toString());
                 stocks.add(stock);
             }
+            return stocks;
         }catch(IOException ex){
             log.error("Could not connect to the host: "+ex.getMessage());
         }catch (NullPointerException ex){
