@@ -15,9 +15,9 @@ import java.util.Properties;
 @Slf4j
 public class Utils {
     Properties properties = new Properties();
-    public static List<List<String>> readEquities(){
+    public static List<List<String>> readEquities(String path){
         List<List<String>> equities = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(ResourceUtils.getFile("classpath:equities.txt")
+        try(BufferedReader br = new BufferedReader(new FileReader(ResourceUtils.getFile("classpath:"+path)
         ))) {
             for(String line; (line = br.readLine()) != null; ) {
                 // process the line.
