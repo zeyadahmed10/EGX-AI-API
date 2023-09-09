@@ -1,18 +1,21 @@
 package org.egx.scraping.scrapers;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.scraping.IO.Stock;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 @Slf4j
+@Component
+@Data
 public class StockScraper{
-    public static final String[] NUMBER_STATE ={".up", ".down",".unchanged"};
-    public static Document getDocument(String url) throws IOException {
+    public Document getDocument(String url) throws IOException {
         Document document = null;
         try{
             document = Jsoup.connect(url).userAgent("Mozilla/5.0").get();
@@ -23,7 +26,7 @@ public class StockScraper{
         return document;
     }
 
-    public static Stock parseDataOnPage(Document document) throws IOException{
+    public Stock parseDataOnPage(Document document) throws IOException{
         Stock stock = null;
         try{
             var currPrice = getCurrPrice(document);
