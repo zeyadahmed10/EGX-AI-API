@@ -1,10 +1,12 @@
 package org.egx.scraping.scrapers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.egx.scraping.repos.NewsRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -17,7 +19,8 @@ import java.util.Properties;
 @Component
 @Slf4j
 public class NewsScraper {
-
+    @Autowired
+    private NewsRepository newsRepository;
 
     static String BASE_URL = "https://www.mubasher.info";
     public Document getDocument(String url) throws IOException {
@@ -30,6 +33,9 @@ public class NewsScraper {
         for(var item: news){
             var anchor = getNewsAnchor(item);
             var resourceUrl = getResourceUrl(anchor);
+            String title = anchor.text();
+            if(newsRepository.existsByTitle(title))
+                return result;
             Document subDocNews = this.getDocument(BASE_URL+resourceUrl);
             var lines = getResourceLines(subDocNews);
             StringBuilder newArticle = new StringBuilder();
