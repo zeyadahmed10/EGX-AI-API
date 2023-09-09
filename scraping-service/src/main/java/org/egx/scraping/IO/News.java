@@ -11,6 +11,7 @@ import java.util.Calendar;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(indexes = @Index(columnList = "title"))
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

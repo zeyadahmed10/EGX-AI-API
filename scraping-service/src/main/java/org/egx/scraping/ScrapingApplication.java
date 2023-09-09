@@ -18,9 +18,10 @@ public class ScrapingApplication {
         SpringApplication.run(ScrapingApplication.class, args);
     }
     @Bean
-    CommandLineRunner commandLineRunner(StockService stockService){
+    CommandLineRunner commandLineRunner(NewsScraper newsScraper){
         return args -> {
-            stockService.getUpdatedStockList();
+            var doc = newsScraper.getDocument("https://www.mubasher.info/markets/EGX/stocks/COPR/news");
+            newsScraper.parseDataOnPage(doc);
         };
     }
 }

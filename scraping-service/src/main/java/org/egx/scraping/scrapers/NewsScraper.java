@@ -1,46 +1,61 @@
 package org.egx.scraping.scrapers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
+@Component
+@Slf4j
 public class NewsScraper {
 
-    Document document;
 
-    public NewsScraper() throws IOException {
-        document = Jsoup.connect("https://www.mubasher.info/markets/EGX/stocks/TAQA/news")
-                .userAgent("Mozilla/5.0")
-                .get();
+    static String BASE_URL = "https://www.mubasher.info";
+    public Document getDocument(String url) throws IOException {
+        Document document = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(0).get();
+        return document;
     }
-    public void parseDataOnPage() throws IOException{
-        var news = document.select(".mi-article-media-block.md-whiteframe-z1");
-        var item = news.get(0);
-        var anchor = item.select("a.mi-article-media-block__title");
-        var url = anchor.attr("href");
-        System.out.println(url);
-        //title
-        System.out.println(item.select("div.mi-hide-for-small.mi-article-media-block__text").text());
-        String baseUrl = "https://www.mubasher.info";
-        Document subDocNews = Jsoup.connect(baseUrl+url)
-                .userAgent("Mozilla/5.0")
-                .get();
-        var article = subDocNews.select("div.article__content-text");
-        //System.out.println(article.size());
-        //System.out.println(article);
-        //System.out.println(article.select("div").size());
-        var lines = article.select("p");
-        StringBuilder newArticle = new StringBuilder();
-        for(var line: lines){
-            if(line.getElementsByTag("a").size()>0)
-                continue;
-            if(line.text()=="ترشيحات")
-                continue;
-            newArticle.append(line.text());
+    public List<String> parseDataOnPage(Document document) throws IOException{
+        List<String> result = new ArrayList<String>();
+        var news = getNewsArticles(document);
+        for(var item: news){
+            var anchor = getNewsAnchor(item);
+            var resourceUrl = getResourceUrl(anchor);
+            Document subDocNews = this.getDocument(BASE_URL+resourceUrl);
+            var lines = getResourceLines(subDocNews);
+            StringBuilder newArticle = new StringBuilder();
+            for(var line: lines){
+                if(line.getElementsByTag("a").size()>0)
+                    continue;
+                if(line.text()=="ترشيحات")
+                    continue;
+                newArticle.append(line.text()+"\n");
+            }
+            result.add(newArticle.toString());
         }
-        System.out.println(newArticle.toString());
+        return result;
+    }
 
-
+    static Elements getNewsArticles(Document document){
+        return document.select(".mi-article-media-block.md-whiteframe-z1");
+    }
+    static Elements getNewsAnchor(Element element){
+        return element.select("a.mi-article-media-block__title");
+    }
+    static String getResourceUrl(Elements elements){
+        return elements.attr("href");
+    }
+    static Elements getResourceLines(Document document){
+        var article = document.select("div.article__content-text");
+        return article.select("p");
     }
 }
