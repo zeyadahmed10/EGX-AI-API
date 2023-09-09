@@ -16,31 +16,20 @@ import java.util.stream.Collectors;
 @Data
 public class StockScraper{
     public Document getDocument(String url) throws IOException {
-        Document document = null;
-        try{
-            document = Jsoup.connect(url).userAgent("Mozilla/5.0").get();
-        }catch(IOException e){
-            log.error(e.getMessage());
-            throw new RuntimeException("Could not connect to " + url);
-        }
+
+        Document document = Jsoup.connect(url).userAgent("Mozilla/5.0").get();
         return document;
     }
 
-    public Stock parseDataOnPage(Document document) throws IOException{
-        Stock stock = null;
-        try{
+    public Stock parseDataOnPage(Document document) throws RuntimeException{
             var currPrice = getCurrPrice(document);
             var rateOfChange = getRateOfChange(document);
             var percentageOfChange = getPercentageOfChange(document);
             var marketSummary = getMarketSummary(document);
-            stock = new Stock(currPrice, rateOfChange, percentageOfChange,
+            Stock stock = new Stock(currPrice, rateOfChange, percentageOfChange,
                     marketSummary.get(0), marketSummary.get(1), marketSummary.get(2),
                     marketSummary.get(3), marketSummary.get(4), marketSummary.get(5));
-        }catch(Exception e){
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return stock;
+            return stock;
 
     }
     protected static double getCurrPrice(Document document){
