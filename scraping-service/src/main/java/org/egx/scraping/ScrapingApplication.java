@@ -20,18 +20,7 @@ public class ScrapingApplication {
     @Bean
     CommandLineRunner commandLineRunner(StockService stockService){
         return args -> {
-//            System.out.println("we are here");
-//            var scrapper = new NewsScraper();
-//            scrapper.parseDataOnPage();
-            //scrapper.closeDriver();
-//            String dateStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-//            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-//            System.out.println(dateStamp);
-//            System.out.println(timeStamp);
             stockService.getUpdatedStockList();
-//            var doc = StockScraper.getDocument("https://www.mubasher.info/markets/EGX/stocks/DCRC");
-//            var data = StockScraper.parseDataOnPage(doc);
-//            System.out.println(data);
         };
     }
 }

@@ -32,20 +32,20 @@ public class StockScraper{
             return stock;
 
     }
-    protected static double getCurrPrice(Document document){
+    protected static Double getCurrPrice(Document document) throws RuntimeException{
         String value = document.select(".market-summary__last-price").text();
         return Double.parseDouble(value);
     }
 
-   protected static double getRateOfChange(Document document){
+   protected static Double getRateOfChange(Document document) throws RuntimeException{
        String value = document.select(".market-summary__change.number").text();
         return Double.parseDouble(value);
    }
-   protected static double getPercentageOfChange(Document document){
+   protected static Double getPercentageOfChange(Document document) throws RuntimeException{
         String value =document.select(".market-summary__change-percentage.number").text();
        return Double.parseDouble(value.substring(0, value.length()-1));
    }
-   protected static List<Double> getMarketSummary(Document document){
+   protected static List<Double> getMarketSummary(Document document) throws RuntimeException{
        var strMarketSummary = document.select(".market-summary__block-number").text();
        strMarketSummary = strMarketSummary.replaceAll(",","");
        var arrMarketSummary = strMarketSummary.split(" ");
