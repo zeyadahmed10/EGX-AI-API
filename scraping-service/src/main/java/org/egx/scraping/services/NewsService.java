@@ -24,7 +24,7 @@ public class NewsService {
 
     public static final String BASE_URL = "https://www.mubasher.info/markets/EGX/stocks/";
     public static final String EXTENSION_URL = "/news";
-    public void getUpdatedNews(){
+    public void getUpdatedNews() throws IOException {
         var equities = Utils.readEquities("equities.txt");
         try{
             for(var eq: equities){
@@ -36,7 +36,7 @@ public class NewsService {
             }
         } catch (IOException e) {
             log.info(e.getMessage());
-            throw new RuntimeException(e);
+            throw new IOException(e);
         }catch (RuntimeException e){
             log.info(e.getMessage());
             throw new RuntimeException(e);
