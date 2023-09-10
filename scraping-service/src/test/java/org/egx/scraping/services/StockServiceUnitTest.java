@@ -41,8 +41,8 @@ class StockServiceUnitTest {
     @Test
     void testGetUpdatedStockList_whenDocumentNull_ShouldThrowAnException() throws IOException {
 
-        doThrow(IOException.class).when(stockScraper).getDocument(any(String.class));
-        assertThrows(IOException.class, ()->{stockService.getUpdatedStockList();},()->"Should throw an exception");
+        doReturn(null).when(stockScraper).getDocument(any(String.class));
+        assertThrows(NullPointerException.class, ()->{stockService.getUpdatedStockList();},()->"Should throw an exception");
     }
 
 }
