@@ -23,9 +23,15 @@ class StockScraperUnitTest {
             throw new RuntimeException(e.getMessage());
         }
     }
-
     @Test
-    void testGetDocument_whenUrlIsWrongOrEmpty_shouldThrowAnException() {
+    void testGetDocument_whenUrlIsNull_shouldThrowAnException() {
+        Exception exception = assertThrows(RuntimeException.class, ()->stockScraper.getDocument(""));
+        String expectedMessage = "The 'url' parameter must not be empty.";
+        assertEquals(expectedMessage, exception.getMessage(), ()->"Expected: "+expectedMessage+" but got: "+exception.getMessage());
+
+    }
+    @Test
+    void testGetDocument_whenUrlIsWrong_shouldThrowAnException() {
         Exception exception = assertThrows(RuntimeException.class, ()->stockScraper.getDocument("test"));
         String expectedMessage = "The supplied URL, 'test', is malformed. Make sure it is an absolute URL, and starts with 'http://' or 'https://'. See https://jsoup.org/cookbook/extracting-data/working-with-urls";
         assertEquals(expectedMessage, exception.getMessage(), ()->"Expected: "+expectedMessage+" but got: "+exception.getMessage());
