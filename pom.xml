@@ -10,6 +10,8 @@
     <modules>
         <module>stocks-service</module>
         <module>scraping-service</module>
+        <module>custom-kafkaIO</module>
+        <module>clients</module>
     </modules>
     <packaging>pom</packaging>
 
