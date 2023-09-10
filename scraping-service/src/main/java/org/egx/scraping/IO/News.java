@@ -23,7 +23,7 @@ public class News {
     String date;
     String time;
 
-    News(String title, String article) {
+    public News(String reutersCode, String title, String article) {
         this.reutersCode = reutersCode;
         this.title = title;
         this.article = article;

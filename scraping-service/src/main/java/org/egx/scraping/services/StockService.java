@@ -30,6 +30,8 @@ public class StockService {
                 stocks.add(stock);
             }
             return stocks;
+            //TODO schedule stock scraping
+            //TODO send stock Asynchronously
         }catch(IOException ex){
             log.error("Could not connect to the host: "+ex.getMessage());
             throw new IOException(ex.getMessage());

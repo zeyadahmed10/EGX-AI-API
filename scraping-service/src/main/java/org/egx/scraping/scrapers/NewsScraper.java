@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -27,8 +28,8 @@ public class NewsScraper {
         Document document = Jsoup.connect(url).userAgent("Mozilla/5.0").timeout(0).get();
         return document;
     }
-    public List<String> parseDataOnPage(Document document) throws IOException{
-        List<String> result = new ArrayList<String>();
+    public List<Pair<String,String>> parseDataOnPage(Document document) throws IOException{
+        List<Pair<String,String>> result = new ArrayList();
         var news = getNewsArticles(document);
         for(var item: news){
             var anchor = getNewsAnchor(item);
@@ -46,7 +47,7 @@ public class NewsScraper {
                     continue;
                 newArticle.append(line.text()+"\n");
             }
-            result.add(newArticle.toString());
+            result.add(Pair.of(title,newArticle.toString()));
         }
         return result;
     }
