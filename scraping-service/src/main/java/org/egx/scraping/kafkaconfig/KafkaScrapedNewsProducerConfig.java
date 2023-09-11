@@ -1,6 +1,7 @@
 package org.egx.scraping.kafkaconfig;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.egx.clients.io.ScrapedNews;
 import org.egx.kafkaio.serialization.ScrapedNewsSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class KafkaScrapedNewsProducerConfig {
     public Map<String, Object> produceConfigs(){
         Map<String, Object> props = new HashMap<String, Object>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServers);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, String.class);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,ScrapedNewsSerializer.class);
         return props;
     }
