@@ -14,6 +14,7 @@ public class TopicConfig {
     }
     @Bean
     public NewTopic scrapedStocksTopic(){
+
         return TopicBuilder.name("scrapedStocks").build();
     }
 }
