@@ -24,16 +24,19 @@ public class NewsService {
 
     public static final String BASE_URL = "https://www.mubasher.info/markets/EGX/stocks/";
     public static final String EXTENSION_URL = "/news";
-    public void getUpdatedNews() throws IOException {
+    public List<News> getUpdatedNews() throws IOException {
         var equities = Utils.readEquities("equities.txt");
+        List<News> allNews = new ArrayList<News>();
         try{
             for(var eq: equities){
                 var document = newsScraper.getDocument(
                         BASE_URL + eq.get(3) +EXTENSION_URL);
                 List<Pair<String,String>>equityArticles = newsScraper.parseDataOnPage(document);
                 List<News> newsList = buildNewsList(equityArticles, eq.get(3));
-                newsRepository.saveAll(newsList);
+                allNews.addAll(newsList);
             }
+            newsRepository.saveAll(allNews);
+            return allNews;
         } catch (IOException e) {
             log.info(e.getMessage());
             throw new IOException(e);
