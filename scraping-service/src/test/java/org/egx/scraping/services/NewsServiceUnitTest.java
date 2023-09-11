@@ -34,7 +34,7 @@ class NewsServiceUnitTest {
     @Test
     void testGetUpdatedNews_whenDocumentIsNull_shouldThrowAnException() throws IOException {
         Mockito.doReturn(null).when(newsScraper).getDocument(Mockito.anyString());
-        assertThrows(NullPointerException.class, ()->{newsService.getUpdatedNews();},()->"Should throw an exception");
+        assertThrows(NullPointerException.class, ()->{newsService.getUpdatedNews(Mockito.any(String.class));},()->"Should throw an exception");
     }
 
     @Test
