@@ -1,12 +1,13 @@
 package org.egx.scraping.services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class StockServiceIntegrationTest {
@@ -16,10 +17,12 @@ public class StockServiceIntegrationTest {
 
 
     @Test
-    void testGetUpdatedStockList_whenForLoopSuccess_ShouldReturnListOfSize185() throws IOException {
-        var actualList = stockService.getUpdatedStockList();
-        assertEquals(185, actualList.size(),
-                ()-> "Stock List size expected to be 185 but got: "+actualList.size());
+    void testGetUpdatedStock_whenNoThrows_ShouldReturnStockPOJO() throws IOException {
+
+        var stock = stockService.getUpdatedStock("TAQA");
+        assertNotNull(stock);
+        assertEquals("TAQA", stock.getReutersCode());
+
     }
 
 }

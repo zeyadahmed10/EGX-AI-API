@@ -11,7 +11,7 @@ import java.util.Calendar;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(indexes = @Index(columnList = "title"))
+@Table(name ="news",indexes = @Index(columnList = "title"))
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -20,15 +20,15 @@ public class News {
     String title;
     @Transient
     String article;
-    String date;
-    String time;
+    String newsDate;
+    String newsTime;
 
     public News(String reutersCode, String title, String article) {
         this.reutersCode = reutersCode;
         this.title = title;
         this.article = article;
-        this.date = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
-        this.time = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        this.newsDate = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+        this.newsTime = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
     }
 
 }

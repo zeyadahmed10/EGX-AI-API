@@ -1,5 +1,7 @@
 package org.egx.scraping;
 
+import org.egx.scraping.IO.News;
+import org.egx.scraping.repos.NewsRepository;
 import org.egx.scraping.scrapers.NewsScraper;
 import org.egx.scraping.scrapers.StockScraper;
 import org.egx.scraping.services.StockService;
@@ -19,10 +21,9 @@ public class ScrapingApplication {
         SpringApplication.run(ScrapingApplication.class, args);
     }
 //    @Bean
-//    CommandLineRunner commandLineRunner(NewsScraper newsScraper){
+//    CommandLineRunner commandLineRunner(NewsRepository newsRepository){
 //        return args -> {
-//            var doc = newsScraper.getDocument("https://www.mubasher.info/markets/EGX/stocks/COPR/news");
-//            newsScraper.parseDataOnPage(doc);
+//            newsRepository.save(new News("code","title","article"));
 //        };
 //    }
 }
