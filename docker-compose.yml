@@ -29,6 +29,19 @@ services:
       - postgres
     restart: unless-stopped
 
+  keycloak:
+    image: docker.io/bitnami/keycloak:22
+    environment:
+      KEYCLOAK_DATABASE_HOST: postgres
+      KEYCLOAK_DATABASE_USER: zeyad
+      KEYCLOAK_DATABASE_PASSWORD: password
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper-analytical-pipeline
