@@ -24,8 +24,6 @@ public class StockService {
             stock.setReutersCode(reutersCode);
             log.info(stock.toString());
             return stock;
-            //TODO schedule stock scraping
-            //TODO send stock Asynchronously
         }catch(IOException ex){
             log.error("Could not connect to the host: "+ex.getMessage());
             throw new IOException(ex.getMessage());

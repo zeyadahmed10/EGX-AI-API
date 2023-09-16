@@ -41,8 +41,6 @@ public class NewsService {
             log.info(e.getMessage());
             throw new RuntimeException(e);
         }
-        //TODO schedule news scraping
-        //TODO send news Asynchronously
     }
     List<News> buildNewsList(List<Pair<String,String>> equityArticles, String reutersCode){
         List<News> newsList = new ArrayList<News>();
