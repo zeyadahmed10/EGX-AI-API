@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/apigateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/apigateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/auth-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/clients/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/custom-kafkaIO/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eurekaserver/src/main/java" charset="UTF-8" />

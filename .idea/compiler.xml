@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
         <module name="apigateway" />
+        <module name="auth-service" />
         <module name="clients" />
         <module name="stocks-service" />
         <module name="custom-kafkaIO" />
@@ -20,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="EGX-AI" options="" />
       <module name="apigateway" options="-parameters" />
+      <module name="auth-service" options="-parameters" />
       <module name="clients" options="-parameters" />
       <module name="custom-kafkaIO" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
