@@ -21,4 +21,8 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<?> handleConflict(IllegalArgumentException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(value = {RuntimeException.class})
+    protected ResponseEntity<?> handleConflict(RuntimeException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
 }

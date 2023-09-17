@@ -31,6 +31,10 @@ public class KeyCloakService {
         var userRepresentation = getUserRepresentation(signUpDto);
         userRepresentation.setCredentials(Arrays.asList(passwordCredentials));
         Response response = keycloak.realm(realm).users().create(userRepresentation);
+        if(response.getStatus()!=201){
+            log.error("error creating user "+signUpDto.toString());
+            throw new RuntimeException("Error with status code: "+response.getStatus());
+        }
         String userId = CreatedResponseUtil.getCreatedId(response);
         UserResource userResource = keycloak.realm(realm).users().get(userId);
         userResource.roles().realmLevel().add(Arrays.asList(roleRepresentation));

@@ -15,11 +15,11 @@ public class AuthApplication {
     public static void main(String[] args){
         SpringApplication.run(AuthApplication.class, args);
     }
-    @Bean
-    CommandLineRunner commandLineRunner(KeyCloakService keyCloakService){
-        return args -> {
-
-          keyCloakService.createUser(new SignUpDto("hesham", "zeyad","ahmed", "emial@gmail.com","password","password","user"));
-        };
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(KeyCloakService keyCloakService){
+//        return args -> {
+//
+//          keyCloakService.createUser(new SignUpDto("hesham", "zeyad","ahmed", "emial@gmail.com","password","password","user"));
+//        };
+//    }
 }
