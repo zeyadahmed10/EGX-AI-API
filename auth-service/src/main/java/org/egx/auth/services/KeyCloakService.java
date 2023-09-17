@@ -1,6 +1,7 @@
 package org.egx.auth.services;
 
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.egx.auth.dto.SignUpDto;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
@@ -15,13 +16,14 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 
 @Service
+@Slf4j
 public class KeyCloakService {
 
     @Autowired
     private Keycloak keycloak;
     @Value("${keycloak.realm}")
     private String realm;
-    public void createUser(SignUpDto signUpDto){
+    public String createUser(SignUpDto signUpDto){
         var passwordCredentials =createPasswordCredentials(signUpDto.getPassword());
         var roleRepresentation = getRoleRepresentation(signUpDto.getRole());
         UserRepresentation userRepresentation = new UserRepresentation();
@@ -33,9 +35,8 @@ public class KeyCloakService {
         String userId = CreatedResponseUtil.getCreatedId(response);
         UserResource userResource = keycloak.realm(realm).users().get(userId);
         userResource.roles().realmLevel().add(Arrays.asList(roleRepresentation));
-        System.out.println(userRepresentation);
-        System.out.println(roleRepresentation);
-        System.out.println(userId);
+        log.info("User created successfully with Id: "+userId);
+        return "User created successfully with Id: "+userId;
     }
     public CredentialRepresentation createPasswordCredentials(String password) {
         // TODO check password validity
