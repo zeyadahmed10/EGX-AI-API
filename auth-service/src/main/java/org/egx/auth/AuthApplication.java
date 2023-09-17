@@ -19,7 +19,7 @@ public class AuthApplication {
     CommandLineRunner commandLineRunner(KeyCloakService keyCloakService){
         return args -> {
 
-          keyCloakService.createUser(new SignUpDto("zeyad", "zeyad@Gmail.com", "password","password","user"));
+          keyCloakService.createUser(new SignUpDto("hesham", "zeyad","ahmed", "emial@gmail.com","password","password","user"));
         };
     }
 }

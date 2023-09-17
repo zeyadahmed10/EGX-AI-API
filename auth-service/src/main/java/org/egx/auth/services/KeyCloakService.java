@@ -2,8 +2,11 @@ package org.egx.auth.services;
 
 import jakarta.ws.rs.core.Response;
 import org.egx.auth.dto.SignUpDto;
+import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,22 +22,31 @@ public class KeyCloakService {
     @Value("${keycloak.realm}")
     private String realm;
     public void createUser(SignUpDto signUpDto){
+        var passwordCredentials =createPasswordCredentials(signUpDto.getPassword());
+        var roleRepresentation = getRoleRepresentation(signUpDto.getRole());
         UserRepresentation userRepresentation = new UserRepresentation();
-        userRepresentation.setRealmRoles(Arrays.asList(signUpDto.getRole()));
         userRepresentation.setUsername(signUpDto.getUsername());
         userRepresentation.setEmail(signUpDto.getEmail());
-        var passwordCredentials =createPasswordCredentials(signUpDto.getPassword());
         userRepresentation.setCredentials(Arrays.asList(passwordCredentials));
+        userRepresentation.setEnabled(true);
         Response response = keycloak.realm(realm).users().create(userRepresentation);
-        System.out.println(response.toString());
+        String userId = CreatedResponseUtil.getCreatedId(response);
+        UserResource userResource = keycloak.realm(realm).users().get(userId);
+        userResource.roles().realmLevel().add(Arrays.asList(roleRepresentation));
+        System.out.println(userRepresentation);
+        System.out.println(roleRepresentation);
+        System.out.println(userId);
     }
-    public static CredentialRepresentation createPasswordCredentials(String password) {
+    public CredentialRepresentation createPasswordCredentials(String password) {
         // TODO check password validity
         CredentialRepresentation passwordCredentials = new CredentialRepresentation();
         passwordCredentials.setTemporary(false);
         passwordCredentials.setType(CredentialRepresentation.PASSWORD);
         passwordCredentials.setValue(password);
         return passwordCredentials;
+    }
+    public RoleRepresentation getRoleRepresentation(String roleName){
+        return keycloak.realm(realm).roles().get(roleName).toRepresentation();
     }
 
 }
