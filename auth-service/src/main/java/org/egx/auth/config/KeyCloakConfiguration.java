@@ -1,5 +1,7 @@
 package org.egx.auth.config;
 
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.internal.ResteasyClientBuilderImpl;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -25,6 +27,7 @@ public class KeyCloakConfiguration {
                 .serverUrl(serverUrl)
                 .realm(realm)
                 .clientId(clientId)
+                .clientSecret("oQe3kvOmxGduPi1zuCitvSe9jix9VbIn")
                 .grantType(OAuth2Constants.PASSWORD)
                 .username(username)
                 .password(password)
