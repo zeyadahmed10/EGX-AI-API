@@ -22,12 +22,12 @@ public class KeyCloakConfiguration {
     @Bean
     Keycloak keycloak() {
         return KeycloakBuilder.builder()
-                .serverUrl("http://localhost:8080")
-                .realm("master")
-                .clientId("admin-cli")
+                .serverUrl(serverUrl)
+                .realm(realm)
+                .clientId(clientId)
                 .grantType(OAuth2Constants.PASSWORD)
-                .username("baeldung")
-                .password("secretPassword")
+                .username(username)
+                .password(password)
                 .build();
     }
 }
