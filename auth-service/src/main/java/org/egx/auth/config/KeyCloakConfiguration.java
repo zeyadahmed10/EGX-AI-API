@@ -27,7 +27,6 @@ public class KeyCloakConfiguration {
                 .serverUrl(serverUrl)
                 .realm(realm)
                 .clientId(clientId)
-                .clientSecret("oQe3kvOmxGduPi1zuCitvSe9jix9VbIn")
                 .grantType(OAuth2Constants.PASSWORD)
                 .username(username)
                 .password(password)

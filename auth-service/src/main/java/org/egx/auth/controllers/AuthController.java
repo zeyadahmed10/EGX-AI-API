@@ -2,9 +2,11 @@ package org.egx.auth.controllers;
 
 
 import jakarta.validation.Valid;
+import org.egx.auth.dto.LoginDto;
 import org.egx.auth.dto.SignUpDto;
 import org.egx.auth.services.KeyCloakService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,10 @@ public class AuthController {
     @PostMapping("/signup")
     public String signupUser(@Valid @RequestBody  SignUpDto signUpDto) throws IllegalAccessException {
         return keyCloakService.createUser(signUpDto);
+    }
+    @PostMapping("/signin")
+    public ResponseEntity<Object> signinUser(@Valid @RequestBody LoginDto signInDto){
+        return keyCloakService.getUserToken(signInDto);
     }
 
 

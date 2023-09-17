@@ -2,9 +2,11 @@ package org.egx.auth.services;
 
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.egx.auth.dto.LoginDto;
 import org.egx.auth.dto.SignUpDto;
 import org.egx.auth.exception.ResourceExistedException;
 import org.egx.auth.exception.ResourceNotFoundException;
+import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.UserResource;
@@ -13,7 +15,11 @@ import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
@@ -23,8 +29,30 @@ public class KeyCloakService {
 
     @Autowired
     private Keycloak keycloak;
+    @Autowired
+    RestTemplate restTemplate;
     @Value("${keycloak.realm}")
     private String realm;
+    @Value("${keycloak.clientId}")
+    private String clientId;
+    @Value("${keycloak.loginUrl}")
+    private String loginUrl;
+
+    public ResponseEntity<Object> getUserToken(LoginDto signinDto){
+        //creating headers for request
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED.toString());
+        headers.add("Accept", MediaType.APPLICATION_JSON.toString()); //Optional in case server sends back JSON data
+        //creating body for request
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("grant_type", OAuth2Constants.PASSWORD);
+        requestBody.add("username", signinDto.getUsername());
+        requestBody.add("password", signinDto.getPassword());
+        requestBody.add("client_id", clientId);
+        HttpEntity<MultiValueMap<String, String>> loginEntity = new HttpEntity<>(requestBody, headers);
+        return restTemplate.exchange(loginUrl, HttpMethod.POST, loginEntity, Object.class);
+
+    }
     public String createUser(SignUpDto signUpDto) throws IllegalAccessException {
         var passwordCredentials =createPasswordCredentials(signUpDto);
         var roleRepresentation = getRoleRepresentation(signUpDto.getRole());
