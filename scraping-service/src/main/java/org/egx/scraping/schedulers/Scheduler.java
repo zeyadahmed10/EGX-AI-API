@@ -1,5 +1,6 @@
 package org.egx.scraping.schedulers;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.clients.io.ScrapedNews;
 import org.egx.clients.io.ScrapedStock;
@@ -26,7 +27,11 @@ public class Scheduler {
     private NewsService newsService;
     @Autowired
     private StockService stockService;;
-
+    @PostConstruct
+    public void init() throws IOException {
+        this.scrapeStocks();
+        this.scrapeNews();
+    }
     @Scheduled(cron="0 42 19 * * *",zone="GMT+3:00")
     public void scrapeNews() throws IOException {
         var equities = Utils.readEquities("equities.txt");
