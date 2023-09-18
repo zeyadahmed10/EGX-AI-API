@@ -36,6 +36,7 @@ public class EquityService {
             entityEquities.add(equity);
         }
         equityRepository.saveAll(entityEquities);
+        log.info("Successfully saved equities to DB");
     }
     public Equity getEquityByCode(String reutersCode){
         return equityRepository.findByReutersCode(reutersCode).orElseThrow(()->{
