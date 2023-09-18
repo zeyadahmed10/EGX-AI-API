@@ -16,9 +16,9 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
             "and LOWER(e.name) LIKE %LOWER(?2)%" +
             "and LOWER(e.reuters_code) LIKE %LOWER(?3)% " +
             "ORDER BY n.news_date DESC, n.news_time DESC;";
-    @Query(appliedFiltersQuery)
+    @Query(value = appliedFiltersQuery, nativeQuery = true)
     Page<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter, Pageable pageable);
 
-    @Query(appliedFiltersQuery)
+    @Query(value = appliedFiltersQuery, nativeQuery = true)
     List<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter);
 }

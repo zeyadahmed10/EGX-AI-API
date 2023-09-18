@@ -17,7 +17,7 @@ public class KafkaListeners {
     private EquityService equityService;
     @Autowired
     private NewsService newsService;
-    @KafkaListener(topics="scrapedNews")
+    @KafkaListener(topics="scrapedNews", groupId = "news-service-group")
     void listener(ScrapedNews scrapedNews){
         var equity = equityService.getEquityByCode(scrapedNews.getReutersCode());
         var news = News.builder()
