@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     private String title;
     private String article;
-    private String newsData;
+    private String newsDate;
     private String newsTime;
     @ManyToOne
     @JoinColumn(name = "equity_id")
