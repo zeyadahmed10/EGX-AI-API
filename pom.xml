@@ -13,6 +13,7 @@
         <module>custom-kafkaIO</module>
         <module>clients</module>
         <module>auth-service</module>
+        <module>news-service</module>
     </modules>
     <packaging>pom</packaging>
 
