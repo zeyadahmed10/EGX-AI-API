@@ -5,6 +5,7 @@ import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.egx.clients.io.ScrapedStock;
+import org.springframework.kafka.support.serializer.DeserializationException;
 
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class ScrapedStockDeserializer implements Deserializer<ScrapedStock> {
             }
             return objectMapper.readValue(new String(bytes, "UTF-8"),ScrapedStock.class);
         }catch (Exception e){
-            throw new SerializationException("Error when deserializing byte[] to ScrapedStock");
+            throw new DeserializationException("Unable to deserialize ScrapedStock", bytes, false, e.getCause());
         }
     }
 

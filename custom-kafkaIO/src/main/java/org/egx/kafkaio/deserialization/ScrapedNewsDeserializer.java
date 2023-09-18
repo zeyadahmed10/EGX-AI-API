@@ -23,7 +23,7 @@ public class ScrapedNewsDeserializer implements Deserializer<ScrapedNews> {
                 return null;
             return objectMapper.readValue(new String(bytes,"UTF-8"), ScrapedNews.class);
         }catch (Exception e){
-            throw new SerializationException("Error when deserializing byte[] to ScrapedNews");
+            throw new DeserializationException("Unable to deserialize ScrapedNews", bytes, false, e.getCause());
         }
     }
 
