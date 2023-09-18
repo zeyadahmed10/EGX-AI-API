@@ -37,4 +37,7 @@ public class NewsService {
         // TODO add admin level permission
         newsRepository.deleteById(id);
     }
+    public News createNews(News news){
+        return newsRepository.save(news);
+    }
 }
