@@ -17,6 +17,7 @@ public class KafkaListeners {
     private NewsService newsService;
     @KafkaListener(topics="scrapedNews")
     void listener(ScrapedNews scrapedNews){
-
+        var equity = equityService.getEquityByCode(scrapedNews.getReutersCode());
+        var news = new News()
     }
 }

@@ -14,7 +14,7 @@ public class EquityService {
     @Autowired
     private EquityRepository equityRepository;
 
-    private Equity getEquityByCode(String reutersCode){
+    public Equity getEquityByCode(String reutersCode){
         return equityRepository.findByReutersCode(reutersCode).orElseThrow(()->{
             log.error("could not find equity by code: "+reutersCode);
             return new ResourceNotFoundException("Could not find equity by code: "+reutersCode);
