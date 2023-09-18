@@ -15,6 +15,6 @@ public class News {
     private String newsData;
     private String newsTime;
     @ManyToOne
-    @JoinColumn(name = "newsId")
+    @JoinColumn(name = "equity_id")
     private Equity equity;
 }
