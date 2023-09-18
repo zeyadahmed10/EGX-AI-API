@@ -2,6 +2,7 @@ package org.egx.auth.controllers;
 
 
 import jakarta.validation.Valid;
+import jakarta.ws.rs.core.Response;
 import org.egx.auth.dto.LoginDto;
 import org.egx.auth.dto.SignUpDto;
 import org.egx.auth.services.KeyCloakService;

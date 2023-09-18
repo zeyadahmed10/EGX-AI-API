@@ -23,6 +23,8 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(value = {RuntimeException.class})
     protected ResponseEntity<?> handleConflict(RuntimeException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+        int statusCode = Integer.parseInt(ex.getMessage().substring(ex.getMessage().length()-3));
+        var httpStatus = HttpStatus.valueOf(statusCode);
+        return new ResponseEntity<>(ex.getMessage(), httpStatus);
     }
 }
