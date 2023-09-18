@@ -1,6 +1,8 @@
 package org.egx.news.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.egx.news.entity.News;
+import org.egx.news.exceptions.ResourceNotFoundException;
 import org.egx.news.repos.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class NewsService {
 
     @Autowired
@@ -21,5 +24,15 @@ public class NewsService {
                                       int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return newsRepository.findAllByFilters(equityCategoryFilter, equityNameFilter, equityReutersFilter, pageable);
+    }
+    public News getNewsById(Integer id) {
+        return newsRepository.findById(id)
+                .orElseThrow(()->
+                        new ResourceNotFoundException("Could not find news with id " + id)
+        );
+    }
+    public void deleteNewsById(Integer id){
+        // TODO add admin level permission
+        newsRepository.deleteById(id);
     }
 }
