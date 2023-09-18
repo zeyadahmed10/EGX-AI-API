@@ -27,8 +27,10 @@ public class NewsService {
     }
     public News getNewsById(Integer id) {
         return newsRepository.findById(id)
-                .orElseThrow(()->
-                        new ResourceNotFoundException("Could not find news with id " + id)
+                .orElseThrow(()->{
+                    log.error("Could not find news with id " + id);
+                    return new ResourceNotFoundException("Could not find news with id " + id);
+                }
         );
     }
     public void deleteNewsById(Integer id){
