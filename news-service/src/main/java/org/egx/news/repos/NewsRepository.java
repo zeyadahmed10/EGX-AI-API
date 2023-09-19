@@ -19,6 +19,6 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
     @Query(value = appliedFiltersQuery, nativeQuery = true)
     Page<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter, Pageable pageable);
 
-    @Query(value = appliedFiltersQuery, nativeQuery = true)
-    List<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter);
+//    @Query(value = appliedFiltersQuery, nativeQuery = true)
+//    List<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter);
 }
