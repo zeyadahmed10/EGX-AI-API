@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,12 +13,14 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
 
     String appliedFiltersQuery = "SELECT n.* FROM news n" +
             " INNER JOIN equity e on n.equity_id= e.id" +
-            " WHERE LOWER(e.sector) LIKE %LOWER(?1)%;" +
-            "and LOWER(e.name) LIKE %LOWER(?2)%" +
-            "and LOWER(e.reuters_code) LIKE %LOWER(?3)% " +
-            "ORDER BY n.news_date DESC, n.news_time DESC;";
+            " WHERE LOWER(e.sector) LIKE CONCAT('%',LOWER(:categoryParam),'%')" +
+            " and LOWER(e.name) LIKE CONCAT('%',LOWER(:nameParam),'%')" +
+            " and LOWER(e.reuters_code) LIKE CONCAT('%',LOWER(:codeParam),'%')" +
+            " ORDER BY n.news_date DESC, n.news_time DESC;";
     @Query(value = appliedFiltersQuery, nativeQuery = true)
-    Page<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter, Pageable pageable);
+    Page<News> findAllByFilters(@Param("categoryParam") String equityCategoryFilter,
+                                @Param("nameParam")String equityNameFilter,
+                                @Param("codeParam")String equityReutersFilter, Pageable pageable);
 
 //    @Query(value = appliedFiltersQuery, nativeQuery = true)
 //    List<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter);
