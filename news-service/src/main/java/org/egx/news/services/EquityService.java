@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
+import org.egx.news.exceptions.PageExceeding;
 import org.egx.news.exceptions.ResourceNotFoundException;
 import org.egx.news.repos.EquityRepository;
 import org.egx.news.utils.Utils;
@@ -68,6 +69,8 @@ public class EquityService {
             return new ResourceNotFoundException("No such equity with code: "+code);
         }).getNews();
         int start = (int) pageRequest.getOffset();
+        if(start>=allNews.size())
+            throw new PageExceeding("Page requested more than existed pages "+code+"'s news");
         int end = Math.min((start + pageRequest.getPageSize()), allNews.size());
 
         List<News> pageContent = allNews.subList(start, end);

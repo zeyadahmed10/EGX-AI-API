@@ -1,6 +1,7 @@
 package org.egx.news.exceptions;
 
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     protected ResponseEntity<?> handleConflict(ResourceNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(value = {PageExceeding.class})
+    protected ResponseEntity<?> handleConflict(PageExceeding ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
