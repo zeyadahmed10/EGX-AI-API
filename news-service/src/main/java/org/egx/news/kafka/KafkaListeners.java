@@ -17,16 +17,16 @@ public class KafkaListeners {
     private EquityService equityService;
     @Autowired
     private NewsService newsService;
-//    @KafkaListener(topics="scrapedNews", groupId = "news-service-group", properties = {"spring.json.value.default.type=org.egx.clients.io.ScrapedNews"})
-//    void listener(ScrapedNews scrapedNews){
-//        var equity = equityService.getEquityByCode(scrapedNews.getReutersCode());
-//        var news = News.builder()
-//                .title(scrapedNews.getTitle())
-//                .article(scrapedNews.getArticle())
-//                .newsDate(scrapedNews.getDate())
-//                .newsTime(scrapedNews.getTime())
-//                .equity(equity).build();
-//        newsService.createNews(news);
-//        log.info("Kafka consumed and saved to DB news with Id: "+news.getId());
-//    }
+    @KafkaListener(topics="scrapedNews", groupId = "news-service-group", properties = {"spring.json.value.default.type=org.egx.clients.io.ScrapedNews"})
+    void listener(ScrapedNews scrapedNews){
+        var equity = equityService.getEquityByReutersCode(scrapedNews.getReutersCode());
+        var news = News.builder()
+                .title(scrapedNews.getTitle())
+                .article(scrapedNews.getArticle())
+                .newsDate(scrapedNews.getDate())
+                .newsTime(scrapedNews.getTime())
+                .equity(equity).build();
+        newsService.createNews(news);
+        log.info("Kafka consumed and saved to DB news with Id: "+news.getId());
+    }
 }
