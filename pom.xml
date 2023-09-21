@@ -14,6 +14,8 @@
         <module>clients</module>
         <module>auth-service</module>
         <module>news-service</module>
+        <module>apigateway</module>
+        <module>eurekaserver</module>
     </modules>
     <packaging>pom</packaging>
 

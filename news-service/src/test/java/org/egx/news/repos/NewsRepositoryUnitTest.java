@@ -64,18 +64,56 @@ class NewsRepositoryUnitTest {
     @Test
     void testFindAllByFilters_whenCategoryFilterPresented_shouldReturnTheSpecifiedNewsWithRequiredCategory() {
         //arrange
-        String equityCategoryFilter = "";
+        String equityCategoryFilter = "est";
         String equityNameFilter= "";
         String equityReutersFilter= "";
         Pageable pageable = PageRequest.of(0, 2);
         //act
         var resultedNews = newsRepository.findAllByFilters(equityCategoryFilter,
                 equityNameFilter, equityReutersFilter, pageable);
-
-        var test = resultedNews.getContent();
-        System.out.println(test);
+        var real = resultedNews.stream().map((news)->news.getEquity().getSector()).collect(Collectors.toList());
+        //assert
+        List<String> expected = new ArrayList<String>();
+        for(int i = 0; i <real.size(); i++)
+            expected.add("Real Estate");
+        assertEquals(expected, real, "Expected category type of Real Esstate");
     }
-
+    @Test
+    void testFindAllByFilters_whenNameFilterPresented_shouldReturnTheSpecifiedNewsWithRequiredName() {
+        //arrange
+        String equityCategoryFilter = "Delta";
+        String equityNameFilter= "";
+        String equityReutersFilter= "";
+        Pageable pageable = PageRequest.of(0, 2);
+        //act
+        var resultedNews = newsRepository.findAllByFilters(equityCategoryFilter,
+                equityNameFilter, equityReutersFilter, pageable);
+        var real = resultedNews.stream().map((news)->news.getEquity().getName()).collect(Collectors.toList());
+        List<String> expected = new ArrayList<String>();
+        for(int i = 0; i < real.size(); i++) {
+            expected.add("Delta Construction & Rebuilding");
+        }
+        //assert
+        assertEquals(expected, real);
+    }
+    @Test
+    void testFindAllByFilters_whenReutersFilterPresented_shouldReturnTheSpecifiedNewsWithRequiredReutersCode() {
+        //arrange
+        String equityCategoryFilter = "";
+        String equityNameFilter= "";
+        String equityReutersFilter= "DCRC";
+        Pageable pageable = PageRequest.of(0, 2);
+        //act
+        var resultedNews = newsRepository.findAllByFilters(equityCategoryFilter,
+                equityNameFilter, equityReutersFilter, pageable);
+        var real = resultedNews.stream().map((news)->news.getEquity().getReutersCode()).collect(Collectors.toList());
+        List<String> expected = new ArrayList<String>();
+        for(int i = 0; i < real.size(); i++) {
+            expected.add("DCRC");
+        }
+        //assert
+        assertEquals(expected, real);
+    }
 
 
 }
