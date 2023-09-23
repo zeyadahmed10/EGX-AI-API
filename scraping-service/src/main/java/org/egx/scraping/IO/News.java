@@ -17,6 +17,7 @@ public class News {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Integer Id;
     String reutersCode;
+    @Column(unique = true, nullable = false)
     String title;
     @Transient
     String article;
