@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -21,7 +18,7 @@ public class NewsService {
     private NewsRepository newsRepository;
 
     public Page<News> fetchNewsAsList(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter,
-                                      int page, int size){
+                                                int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return newsRepository.findAllByFilters(equityCategoryFilter, equityNameFilter, equityReutersFilter, pageable);
     }

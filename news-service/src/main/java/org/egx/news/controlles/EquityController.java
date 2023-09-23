@@ -1,18 +1,11 @@
 package org.egx.news.controlles;
 
-import jakarta.annotation.PostConstruct;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
-import org.egx.news.repos.EquityRepository;
-import org.egx.news.repos.NewsRepository;
 import org.egx.news.services.EquityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/equities")
@@ -22,9 +15,10 @@ public class EquityController {
 
     @GetMapping
     public Page<Equity> fetchEquitiesAsList(@RequestParam(defaultValue = "") String sectorFilter,
-                                        @RequestParam(defaultValue = "") String nameFilter,
-                                        @RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int size) {
+                                                      @RequestParam(defaultValue = "") String nameFilter,
+                                                      @RequestParam(defaultValue = "0") int page,
+                                                      @RequestParam(defaultValue = "10") int size) {
+        System.out.println(sectorFilter);
         return equityService.fetchEquitiesAsList(sectorFilter, nameFilter, page, size);
     }
 

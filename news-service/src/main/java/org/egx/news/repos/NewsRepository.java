@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface NewsRepository extends JpaRepository<News, Integer> {
 
     String appliedFiltersQuery = "SELECT n.* FROM news n" +
@@ -19,8 +17,8 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
             " ORDER BY n.news_date DESC, n.news_time DESC;";
     @Query(value = appliedFiltersQuery, nativeQuery = true)
     Page<News> findAllByFilters(@Param("categoryParam") String equityCategoryFilter,
-                                @Param("nameParam")String equityNameFilter,
-                                @Param("codeParam")String equityReutersFilter, Pageable pageable);
+                                          @Param("nameParam")String equityNameFilter,
+                                          @Param("codeParam")String equityReutersFilter, Pageable pageable);
 
 //    @Query(value = appliedFiltersQuery, nativeQuery = true)
 //    List<News> findAllByFilters(String equityCategoryFilter, String equityNameFilter, String equityReutersFilter);
