@@ -13,7 +13,20 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
+  timescaledb:
+    container_name: timescaledb
+    image: timescale/timescaledb:latest-pg15
+    environment:
+      POSTGRES_USER: zeyad
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - timescaledb:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - timescaledb
+    restart: unless-stopped
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -27,6 +40,7 @@ services:
       - "5050:80"
     networks:
       - postgres
+      - timescaledb
     restart: unless-stopped
 
   keycloak:
@@ -70,7 +84,10 @@ services:
 networks:
   postgres:
     driver: bridge
+  timescaledb:
+    driver: bridge
 volumes:
   postgres:
   pgadmin:
+  timescaledb:
 
