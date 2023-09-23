@@ -15,6 +15,7 @@ public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
+    @Column(unique = true, nullable = false)
     private String title;
     @Column(columnDefinition="TEXT")
     private String article;
