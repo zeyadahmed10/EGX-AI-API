@@ -1,11 +1,9 @@
-package org.egx.news.entity;
+package org.egx.stocks.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.egx.clients.io.BaseEquity;
-
-import java.util.List;
 
 @Entity
 @Table(name = "equity")
@@ -18,9 +16,4 @@ public class Equity extends BaseEquity {
     public Equity(Integer id, String reutersCode, String name, String ISN, String sector, String listingDate) {
         super(id, reutersCode, name, ISN, sector, listingDate);
     }
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "equity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<News> news;
-
 }
