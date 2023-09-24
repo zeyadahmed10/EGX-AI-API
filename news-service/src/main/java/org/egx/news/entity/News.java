@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Entity
 @Data
 @Builder
@@ -19,8 +21,8 @@ public class News {
     private String title;
     @Column(columnDefinition="TEXT")
     private String article;
-    private String newsDate;
-    private String newsTime;
+    @Column(nullable = false)
+    private Timestamp time;
     @ManyToOne
     @JoinColumn(name = "equity_id")
     private Equity equity;

@@ -42,8 +42,7 @@ public class Scheduler {
                         .reutersCode(item.getReutersCode())
                         .title(item.getTitle())
                         .article(item.getArticle())
-                        .time(item.getNewsTime())
-                        .date(item.getNewsDate())
+                        .time(item.getTime())
                         .build();
                 kafkaNewsTemplate.send("scrapedNews",scrapedNews);
                 log.info("Kafka sent news successfully: "+scrapedNews.getTitle());
@@ -67,7 +66,6 @@ public class Scheduler {
                     .lowest(stock.getLowest())
                     .volume(stock.getVolume())
                     .value(stock.getValue())
-                    .date(stock.getDate())
                     .time(stock.getTime())
                     .build();
             kafkaStockTemplate.send("scrapedStock", scrapedStock);

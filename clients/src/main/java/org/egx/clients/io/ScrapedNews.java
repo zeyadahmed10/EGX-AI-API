@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -14,5 +16,5 @@ public class ScrapedNews {
     String title;
     String article;
     String date;
-    String time;
+    Timestamp time;
 }

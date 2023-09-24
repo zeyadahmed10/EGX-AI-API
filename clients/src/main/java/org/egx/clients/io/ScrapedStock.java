@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 @Data
@@ -20,6 +21,5 @@ public class ScrapedStock {
     double lowest;
     double volume;
     double value;
-    String date;
-    String time;
+    Timestamp time;
 }

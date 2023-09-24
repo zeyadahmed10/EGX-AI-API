@@ -23,8 +23,7 @@ public class KafkaListeners {
         var news = News.builder()
                 .title(scrapedNews.getTitle())
                 .article(scrapedNews.getArticle())
-                .newsDate(scrapedNews.getDate())
-                .newsTime(scrapedNews.getTime())
+                .time(scrapedNews.getTime())
                 .equity(equity).build();
         newsService.createNews(news);
         log.info("Kafka consumed and saved to DB news with Id: "+news.getId());
