@@ -1,5 +1,6 @@
 package org.egx.scraping.manegers;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.clients.io.ScrapedStock;
 import org.egx.scraping.IO.Stock;
@@ -18,7 +19,6 @@ public class StockScrapingManager {
 
     @Autowired
     private StockService stockService;
-    ;
 
     public void scrapeStocks() throws IOException {
         var equities = Utils.readEquities("equities.txt");

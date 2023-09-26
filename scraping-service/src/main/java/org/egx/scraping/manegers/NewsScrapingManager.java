@@ -19,6 +19,7 @@ public class NewsScrapingManager {
     private NewsService newsService;
 
     public void scrapeNews() throws IOException {
+        log.info("scraping news started-----------------------------------------------------------");
         var equities = Utils.readEquities("equities.txt");
         for(var eq: equities){
             var newsList = newsService.getUpdatedNews(eq.get(3));

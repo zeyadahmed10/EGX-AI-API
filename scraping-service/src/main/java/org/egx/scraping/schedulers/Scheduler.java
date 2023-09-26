@@ -23,22 +23,25 @@ public class Scheduler {
 
     @PostConstruct
     public void init() throws IOException {
-        new Thread(() -> {
-            try {
-                stockScrapingManager.scrapeStocks();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-
-
-        new Thread(() -> {
-            try {
-                newsScrapingManager.scrapeNews();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        //TODO: support multiple threads
+//        new Thread(() -> {
+//            try {
+//                stockScrapingManager.scrapeStocks();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }).start();
+//
+//
+//        new Thread(() -> {
+//            try {
+//                newsScrapingManager.scrapeNews();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }).start();
+        stockScrapingManager.scrapeStocks();
+        newsScrapingManager.scrapeNews();
     }
     @Async
     @Scheduled(cron="0 42 19 * * *",zone="GMT+3:00")
