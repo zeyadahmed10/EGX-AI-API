@@ -7,7 +7,6 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Setter
 @Getter
 public class BaseEquity {

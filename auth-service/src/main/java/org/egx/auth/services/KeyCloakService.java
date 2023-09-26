@@ -1,11 +1,11 @@
 package org.egx.auth.services;
 
+import exceptions.ResourceExistedException;
+import exceptions.ResourceNotFoundException;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.auth.dto.LoginDto;
 import org.egx.auth.dto.SignUpDto;
-import org.egx.auth.exception.ResourceExistedException;
-import org.egx.auth.exception.ResourceNotFoundException;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;

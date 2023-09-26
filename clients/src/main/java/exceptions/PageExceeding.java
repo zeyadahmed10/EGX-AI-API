@@ -1,4 +1,4 @@
-package org.egx.news.exceptions;
+package exceptions;
 
 public class PageExceeding extends IllegalStateException {
     public PageExceeding() {

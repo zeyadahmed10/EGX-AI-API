@@ -8,7 +8,6 @@ import org.egx.clients.io.BaseEquity;
 @Entity
 @Table(name = "equity")
 @AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
 public class Equity extends BaseEquity {

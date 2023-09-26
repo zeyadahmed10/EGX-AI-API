@@ -1,11 +1,11 @@
 package org.egx.news.services;
 
+import exceptions.PageExceeding;
+import exceptions.ResourceNotFoundException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
-import org.egx.news.exceptions.PageExceeding;
-import org.egx.news.exceptions.ResourceNotFoundException;
 import org.egx.news.repos.EquityRepository;
 import org.egx.news.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class EquityService {
     public Equity getEquityByReutersCode(String code){
         return equityRepository.findByReutersCode(code).orElseThrow(()->{
             log.error("No equity with code: "+code);
-            return new ResourceNotFoundException("No such equity with code: "+code);
+            return new ResourceNotFoundException("No equity with code: "+code);
         });
     }
 

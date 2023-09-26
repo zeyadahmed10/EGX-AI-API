@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @MappedSuperclass
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

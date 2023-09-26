@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,7 +19,16 @@ public class StockController {
     private StockService stockService;
 
     @GetMapping
-    public Page<UpdatedStock> fetchAllStocks(){
-        return null;
+    public Page<UpdatedStock> fetchAllStocks(
+            @RequestParam(defaultValue = "") String sectorFilter,
+            @RequestParam(defaultValue = "") String nameFilter,
+            @RequestParam(defaultValue = "0" ) int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        return stockService.fetchAllStocks(sectorFilter, nameFilter,  page, size);
+    }
+    @GetMapping("{code}")
+    public UpdatedStock getUpdatedStockByReutersCode(String reutersCode){
+        return stockService.getStockByReutersCode(reutersCode);
     }
 }

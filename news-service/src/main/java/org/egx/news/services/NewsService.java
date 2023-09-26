@@ -1,8 +1,8 @@
 package org.egx.news.services;
 
+import exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.news.entity.News;
-import org.egx.news.exceptions.ResourceNotFoundException;
 import org.egx.news.repos.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

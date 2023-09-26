@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,8 +53,7 @@ class NewsRepositoryUnitTest {
             var news = News.builder()
                     .article("article" + i)
                     .title("title" + i)
-                    .newsDate("date"+i)
-                    .newsTime("time"+i)
+                    .time(Timestamp.from(Instant.now()))
                     .equity(equityList.get(EqIdx)).build();
             newsList.add(news);
         }

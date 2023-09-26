@@ -1,4 +1,4 @@
-package org.egx.auth.exception;
+package exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message, Throwable cause) {
