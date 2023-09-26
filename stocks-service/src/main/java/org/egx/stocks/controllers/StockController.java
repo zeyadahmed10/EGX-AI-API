@@ -2,7 +2,7 @@ package org.egx.stocks.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.egx.stocks.entity.UpdatedStock;
-import org.egx.stocks.stock.StockService;
+import org.egx.stocks.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
