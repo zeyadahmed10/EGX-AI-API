@@ -1,6 +1,6 @@
-create sequence if not exists equity_seq start with 1 increment by 50;
-create sequence if not exists historical_stock_seq start with 1 increment by 50;
-create sequence if not exists updated_stock_seq start with 1 increment by 50;
+create sequence if not exists equity_seq start with 1 increment by 1;
+create sequence if not exists historical_stock_seq start with 1 increment by 1;
+create sequence if not exists updated_stock_seq start with 1 increment by 1;
 create table if not exists equity
 (
     id integer not null,
