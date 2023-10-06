@@ -37,7 +37,7 @@ public class StockScrapingManager {
                     .value(stock.getValue())
                     .time(stock.getTime())
                     .build();
-            kafkaStockTemplate.send("scrapedStock", scrapedStock);
+            kafkaStockTemplate.send("scrapedStocks", scrapedStock);
             log.info("kafka sent stock successfully :" + scrapedStock.toString());
         }
     }

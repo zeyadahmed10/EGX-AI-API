@@ -2,7 +2,6 @@ package org.egx.stocks.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.egx.clients.io.ScrapedNews;
 import org.egx.clients.io.ScrapedStock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

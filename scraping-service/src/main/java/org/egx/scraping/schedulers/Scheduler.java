@@ -41,7 +41,7 @@ public class Scheduler {
 //            }
 //        }).start();
         stockScrapingManager.scrapeStocks();
-        newsScrapingManager.scrapeNews();
+        //newsScrapingManager.scrapeNews();
     }
     @Async
     @Scheduled(cron="0 42 19 * * *",zone="GMT+3:00")
@@ -49,7 +49,7 @@ public class Scheduler {
         newsScrapingManager.scrapeNews();
     }
     @Async
-    @Scheduled(cron = "0 0/15 10-15 * * *", zone="GMT+3:00")
+    @Scheduled(cron = "0 0/5 9-15 * * *", zone="GMT+3:00")
     public void scrapeStocksScheduled() throws IOException{
             stockScrapingManager.scrapeStocks();
         }

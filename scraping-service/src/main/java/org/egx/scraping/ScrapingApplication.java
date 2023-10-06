@@ -1,15 +1,9 @@
 package org.egx.scraping;
 
-import org.egx.scraping.IO.News;
-import org.egx.scraping.repos.NewsRepository;
-import org.egx.scraping.scrapers.NewsScraper;
-import org.egx.scraping.scrapers.StockScraper;
-import org.egx.scraping.services.StockService;
-import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 

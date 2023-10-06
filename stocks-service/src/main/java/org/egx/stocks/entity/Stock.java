@@ -17,8 +17,6 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
     @Column(nullable = false)
-    private String reutersCode;
-    @Column(nullable = false)
     private double currPrice;
     @Column(nullable = false)
     private double rateOfChange;

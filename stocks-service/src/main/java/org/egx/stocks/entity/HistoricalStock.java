@@ -13,8 +13,8 @@ import java.sql.Timestamp;
 @Getter
 public class HistoricalStock extends Stock{
     @Builder
-    public HistoricalStock(Integer id, String reutersCode, double currPrice, double rateOfChange, double percentageOfChange, double open, double prevClose, double highest, double lowest, double volume, double value, Timestamp time, Equity equity) {
-        super(id, reutersCode, currPrice, rateOfChange, percentageOfChange, open, prevClose, highest, lowest, volume, value, time);
+    public HistoricalStock(Integer id, double currPrice, double rateOfChange, double percentageOfChange, double open, double prevClose, double highest, double lowest, double volume, double value, Timestamp time, Equity equity) {
+        super(id, currPrice, rateOfChange, percentageOfChange, open, prevClose, highest, lowest, volume, value, time);
         this.equity = equity;
     }
     @ManyToOne
