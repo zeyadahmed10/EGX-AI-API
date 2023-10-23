@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.clients.io.ScrapedStock;
-import org.egx.stocks.entity.Equity;
 import org.egx.stocks.entity.HistoricalStock;
 import org.egx.stocks.entity.UpdatedStock;
 import org.egx.stocks.repos.EquityRepository;
