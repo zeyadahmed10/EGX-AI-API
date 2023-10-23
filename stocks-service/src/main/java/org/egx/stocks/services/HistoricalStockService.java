@@ -20,7 +20,7 @@ public class HistoricalStockService {
     @Autowired
     private HistoricalStockRepository historicalStockRepository;
 
-    Page<OHCLVStatistics> getOHCLVStatistics(String reutersParam,
+    public Page<OHCLVStatistics> getOHCLVStatistics(String reutersParam,
                                              String periodParam,
                                              String intervalParam,
                                              int size, int page){
