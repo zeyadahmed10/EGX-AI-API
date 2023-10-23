@@ -1,5 +1,6 @@
 package org.egx.news.services;
 
+import exceptions.ResourceNotFoundException;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
 import org.egx.news.repos.NewsRepository;
@@ -8,10 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +17,11 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class NewsServiceUnitTest {
@@ -51,11 +53,9 @@ class NewsServiceUnitTest {
         for (int i = 0; i < 4; i++) {
             int EqIdx = i > 1 ? 1 : 0;
             var news = News.builder()
-                    .id(i)
                     .article("article" + i)
                     .title("title" + i)
-                    .newsDate("date" + i)
-                    .newsTime("time" + i)
+                    .time(java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0"))
                     .equity(equityList.get(EqIdx)).build();
             newsList.add(news);
         }

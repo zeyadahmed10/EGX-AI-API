@@ -6,7 +6,9 @@ import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
 import org.egx.news.repos.EquityRepository;
 import org.egx.news.repos.NewsRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,14 +17,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @ExtendWith(SpringExtension.class)
@@ -54,8 +54,7 @@ class NewsControllerIntegrationTest {
             var news = News.builder()
                     .article("article" + i)
                     .title("title" + i)
-                    .newsDate("date"+i)
-                    .newsTime("time"+i)
+                    .time(java.sql.Timestamp.valueOf("2007-09-23 10:10:10.0"))
                     .equity(equityList.get(EqIdx)).build();
             newsList.add(news);
         }

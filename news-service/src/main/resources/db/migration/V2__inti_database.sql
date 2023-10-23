@@ -3,7 +3,6 @@ create sequence if not exists equity_seq start with 1 increment by 50;
 create table if not exists news(
 
  id integer not null,
- reuters_code varchar(255) not null,
  title varchar(500) not null,
  article text,
  time timestamp(6) not null,

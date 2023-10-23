@@ -14,7 +14,7 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
             " WHERE LOWER(e.sector) LIKE CONCAT('%',LOWER(:categoryParam),'%')" +
             " and LOWER(e.name) LIKE CONCAT('%',LOWER(:nameParam),'%')" +
             " and LOWER(e.reuters_code) LIKE CONCAT('%',LOWER(:codeParam),'%')" +
-            " ORDER BY n.news_date DESC, n.news_time DESC;";
+            " ORDER BY n.time DESC;";
     @Query(value = appliedFiltersQuery, nativeQuery = true)
     Page<News> findAllByFilters(@Param("categoryParam") String equityCategoryFilter,
                                           @Param("nameParam")String equityNameFilter,

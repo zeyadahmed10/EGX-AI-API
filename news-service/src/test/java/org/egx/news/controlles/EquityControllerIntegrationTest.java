@@ -4,7 +4,6 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import jakarta.transaction.Transactional;
 import org.egx.news.entity.Equity;
-import org.egx.news.entity.News;
 import org.egx.news.repos.EquityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,8 @@ import java.util.List;
 
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -81,9 +81,9 @@ class EquityControllerIntegrationTest {
     void testGetEquity_whenReutersCodeProvided_shouldReturnRequiredEquity() {
         RestAssured.baseURI = BASE_URI;
         RestAssured.port = port;
-        var response = when().get("/api/v1/equities/{code}","MOIN")
+        var response = when().get("/api/v1/equities/{code}","ISMA")
                 .then().statusCode(200)
-                .body("id",equalTo(30));
+                .body("id",equalTo(1));
 
     }
 
@@ -101,7 +101,7 @@ class EquityControllerIntegrationTest {
     void testGetNews_whenReutersCodeProvided_shouldReturnNewsForGivenEquity() {
         RestAssured.baseURI = BASE_URI;
         RestAssured.port = port;
-        var response = when().get("/api/v1/equities/{code}/news","DCRC")
+        var response = when().get("/api/v1/equities/{code}/news","MOIN")
                 .then().statusCode(200);
     }
 }
