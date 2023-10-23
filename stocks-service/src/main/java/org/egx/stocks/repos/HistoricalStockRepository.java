@@ -18,5 +18,5 @@ public interface HistoricalStockRepository extends JpaRepository<HistoricalStock
                                              @Param("intervalParam") String intervalParam,
                                              Pageable pageable);
 
-
+    boolean existsByEquity_reutersCode(String reutersCode);
 }
