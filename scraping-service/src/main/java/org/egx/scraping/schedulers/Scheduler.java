@@ -49,7 +49,7 @@ public class Scheduler {
         newsScrapingManager.scrapeNews();
     }
     @Async
-    @Scheduled(cron = "0 0/5 10-15 * * SUN-THU", zone="GMT+3:00")
+    @Scheduled(cron = "0 0/15 10-15 * * SUN-THU", zone="GMT+3:00")
     public void scrapeStocksScheduled() throws IOException{
             stockScrapingManager.scrapeStocks();
         }
