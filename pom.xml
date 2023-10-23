@@ -16,6 +16,7 @@
         <module>news-service</module>
         <module>apigateway</module>
         <module>eurekaserver</module>
+        <module>notification-service</module>
     </modules>
     <packaging>pom</packaging>
 
