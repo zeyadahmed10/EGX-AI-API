@@ -1,0 +1,29 @@
+server:
+  port: 8400
+spring:
+  application:
+    name: notification-service
+  kafka:
+    bootstrap:
+      servers: https://localhost:9092
+  data:
+    mongodb:
+      uri: mongodb://zeyad:password@localhost:8888/notification?authSource=admin
+
+#      username: "root"
+#      password: "example"
+#      host: "localhost"
+#      port: 27017
+#      database: "notification"
+#      authentication-database: "admin"
+#spring.data.mongodb.username=root
+#spring.data.mongodb.password= 'example'
+#spring.data.mongodb.host=localhost
+#spring.data.mongodb.port=27017
+#spring.data.mongodb.database=notification
+#spring.data.mongodb.authentication-database=admin
+#spring.data.mongodb.uri=mongodb://root:example@localhost:27017/notification?authSource=admin
+eureka:
+  client:
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka
