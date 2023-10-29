@@ -1,21 +1,19 @@
 package org.egx.notifications.entity;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-@Data
-@NoArgsConstructor
+@Embeddable
+class NewsSubscriptionId { Integer equityId; Integer userId; }
+@Entity
 @AllArgsConstructor
-@Builder
-@Document
+@NoArgsConstructor
+@Data
 public class NewsSubscription {
-    @Id
-    private String id;
-    private String reutersCode;
-    private List<String> subscribedUsers;
+    @EmbeddedId
+    private NewsSubscriptionId id;
 }
