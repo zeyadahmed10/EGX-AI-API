@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable
-class NewsSubscriptionId { Integer equityId; Integer userId; }
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Embeddable
-class StockSubscriptionId { Integer equityId; Integer userId; }
 @Entity
 @Data
 @Builder
