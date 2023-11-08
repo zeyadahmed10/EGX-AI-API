@@ -15,6 +15,11 @@ spring:
     show-sql : true
     hibernate:
       ddl-auto: create-drop
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/EGX-AI
 eureka:
   client:
   serviceUrl:
