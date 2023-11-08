@@ -1,6 +1,8 @@
 package org.egx.notifications.controllers;
 
 import org.egx.notifications.dto.SubscriptionRequest;
+import org.egx.notifications.services.SubscriptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/notifications/subscription")
 public class SubscriptionController {
 
+    @Autowired
+    private SubscriptionService subscriptionService;
     @PostMapping
     public void subscribe(@AuthenticationPrincipal Jwt jwt, @RequestBody SubscriptionRequest subscriptionRequest){
         String userEmail = String.valueOf(jwt.getClaims().get("email"));
-
+        subscriptionService.subscribe(userEmail, subscriptionRequest);
     }
 }

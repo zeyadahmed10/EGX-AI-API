@@ -16,7 +16,7 @@ public class SubscribedUser {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Integer id;
-
+    @Column(unique = true, nullable = false)
     private String email;
 
 
