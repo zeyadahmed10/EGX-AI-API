@@ -38,7 +38,7 @@ public class KafkaListeners {
                 "Current Price: "+String.valueOf(stock.getCurrPrice())+"\n" +
                 "Change: "+String.valueOf(stock.getRateOfChange())+"\n" +
                 "Percentage Change: "+String.valueOf(stock.getPercentageOfChange())+"\n" +
-                "Please note that these values are based on the most recent updates and may be subject to further fluctuations."
+                "Please note that these values are based on the most recent updates and may be subject to further fluctuations.";
     }
     @KafkaListener(containerFactory = "stockKafkaListenerContainerFactory", topics = "scrapedStocks", groupId = "notification-service-stock-group", properties = {"spring.json.value.default.type=org.egx.clients.io.ScrapedStock"})
     void stockListener(ScrapedStock scrapedStock) throws JsonProcessingException {
