@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StockSubscriptionService {
+public class StockSubscriptionService implements SubscriptionService {
     @Autowired
     private SubscribedUserRepository subscribedUserRepository;
     @Autowired
@@ -20,7 +20,7 @@ public class StockSubscriptionService {
     @Autowired
     private StockSubscriptionRepository subscriptionRepository;
 
-    public void subscribe(String userEmail, SubscriptionRequest subscriptionRequest) throws IllegalAccessException {
+    public void subscribe(String userEmail, SubscriptionRequest subscriptionRequest){
 
         SubscribedUser subscribedUser = subscribedUserRepository.findByEmail(userEmail).orElseGet(() -> {
             return subscribedUserRepository
@@ -36,7 +36,7 @@ public class StockSubscriptionService {
             subscriptionRepository.save(new StockSubscription(subscriptionEntry));
         }
     }
-    public void removeSubscription(String userEmail, SubscriptionRequest subscriptionRequest) throws IllegalAccessException {
+    public void removeSubscription(String userEmail, SubscriptionRequest subscriptionRequest){
         SubscribedUser subscribedUser = subscribedUserRepository.findByEmail(userEmail).orElseThrow(() ->
             new ResourceNotFoundException("User not subscribed to any Equity with email: "+ userEmail)
         );
