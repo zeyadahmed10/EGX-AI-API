@@ -27,11 +27,11 @@ public class SubscriptionController {
     @PostMapping("/subscribe")
     public void subscribe(@AuthenticationPrincipal Jwt jwt, @RequestBody SubscriptionRequest subscriptionRequest) throws IllegalAccessException {
         String userEmail = String.valueOf(jwt.getClaims().get("email"));
-
+        String name = String.valueOf(jwt.getClaims().get("name"));
         Optional.ofNullable(servicesMap.get(SubscriptionServiceImplEnum.getSubscriptionServiceName(subscriptionRequest.getSubscriptionType())))
                 .orElseThrow(()-> new IllegalArgumentException("No subscription type found for: "+
                         subscriptionRequest.getSubscriptionType() +" choose between 'stock' or 'news'"))
-                .subscribe(userEmail, subscriptionRequest);
+                .subscribe(userEmail, name, subscriptionRequest);
     }
 
     @PostMapping("/unsubscribe")

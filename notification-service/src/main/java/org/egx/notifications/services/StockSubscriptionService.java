@@ -22,11 +22,11 @@ public class StockSubscriptionService implements SubscriptionService {
     @Autowired
     private StockSubscriptionRepository subscriptionRepository;
 
-    public void subscribe(String userEmail, SubscriptionRequest subscriptionRequest){
+    public void subscribe(String userEmail, String name, SubscriptionRequest subscriptionRequest){
 
         SubscribedUser subscribedUser = subscribedUserRepository.findByEmail(userEmail).orElseGet(() -> {
             return subscribedUserRepository
-                    .save(SubscribedUser.builder().email(userEmail).build());
+                    .save(SubscribedUser.builder().email(userEmail).name(name).build());
         });
         var equity = equityRepository.findByReutersCode(subscriptionRequest.getReutersCode()).orElseThrow(
                 ()-> new ResourceNotFoundException("No equity found with code: "+ subscriptionRequest.getReutersCode())
