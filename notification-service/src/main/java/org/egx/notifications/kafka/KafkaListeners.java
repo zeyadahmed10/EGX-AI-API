@@ -20,6 +20,7 @@ public class KafkaListeners {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         System.out.println("got stock");
         //TODO: notify subscribers
+
     }
 
     @KafkaListener(containerFactory ="newsKafkaListenerContainerFactory",topics="scrapedNews", groupId = "notification-service-news-group", properties = {"spring.json.value.default.type=org.egx.clients.io.ScrapedNews"})

@@ -20,6 +20,17 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/EGX-AI
+  mail:
+    host: smtp.gmail.com
+    port: 578
+    username: zeyad10101@gmail.com
+    password: ibdq ddvq xnss pggn
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true
 eureka:
   client:
   serviceUrl:
