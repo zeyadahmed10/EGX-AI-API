@@ -14,13 +14,18 @@ public class NotificationApplication {
     }
 
 //    @Bean
-//    CommandLineRunner commandLineRunner(StockSubscriptionService service, EquityRepository repo){
+//    CommandLineRunner commandLineRunner(StockSubscriptionService service, EquityRepository repo, SubscribedUserRepository repo2){
 //        return args ->{
 //            repo.save(Equity.builder().ISN("isn").name("test").listingDate("date").sector("sector").reutersCode("test").build());
-//            service.subscribe("zeyad@gmail.com",new SubscriptionRequest("test","news"));
+//            repo.save(Equity.builder().ISN("isn").name("test2").listingDate("date").sector("sector").reutersCode("test2").build());
 //            service.subscribe("zeyad@gmail.com",new SubscriptionRequest("test","stock"));
-//            service.removeSubscription("zeyad@gmail.com",new SubscriptionRequest("test","lol"));
-//            System.out.println(SubscriptionServiceImplEnum.getSubscriptionServiceName("news"));
+//            service.subscribe("hesham@gmail.com",new SubscriptionRequest("test","stock"));
+//            service.subscribe("zeyad2@gmail.com",new SubscriptionRequest("test2","stock"));
+//            service.subscribe("hesham2@gmail.com",new SubscriptionRequest("test2","stock"));
+//            System.out.println("test");
+//            System.out.println(repo2.findSubscribedUsersByReutersCode("test"));
+//            System.out.println("test2");
+//            System.out.println(repo2.findSubscribedUsersByReutersCode("test2"));
 //        };
 //    }
 }
