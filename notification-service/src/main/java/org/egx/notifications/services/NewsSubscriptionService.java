@@ -7,9 +7,11 @@ import org.egx.notifications.repos.EquityRepository;
 import org.egx.notifications.repos.NewsSubscriptionRepository;
 import org.egx.notifications.repos.SubscribedUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
+@Qualifier("newsSubscriptionService")
 public class NewsSubscriptionService implements SubscriptionService{
     @Autowired
     private SubscribedUserRepository subscribedUserRepository;

@@ -9,9 +9,11 @@ import org.egx.notifications.repos.EquityRepository;
 import org.egx.notifications.repos.StockSubscriptionRepository;
 import org.egx.notifications.repos.SubscribedUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
+@Qualifier("stockSubscriptionService")
 public class StockSubscriptionService implements SubscriptionService {
     @Autowired
     private SubscribedUserRepository subscribedUserRepository;
