@@ -31,7 +31,18 @@ spring:
           auth: true
         starttls:
           enable: true
+  flyway:
+    baseline-on-migrate: true
+    enabled: false
+    url: jdbc:postgresql://localhost:5432/notifications
+    user: zeyad
+    password: password
+    sql-migration-prefix: V
+    repeatable-sql-migration-prefix: R
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
 eureka:
   client:
   serviceUrl:
     defaultZone: http://localhost:8761/eureka
+
