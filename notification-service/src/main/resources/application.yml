@@ -14,7 +14,7 @@ spring:
     database: POSTGRESQL
     show-sql : true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
   security:
     oauth2:
       resourceserver:
@@ -33,7 +33,7 @@ spring:
           enable: true
   flyway:
     baseline-on-migrate: true
-    enabled: false
+    enabled: true
     url: jdbc:postgresql://localhost:5432/notifications
     user: zeyad
     password: password
