@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockSubscriptionId {
+public class SubscriptionId {
     Integer equityId;
     Integer userId;
 }

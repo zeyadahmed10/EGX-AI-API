@@ -1,8 +1,10 @@
 package org.egx.notifications.repos;
 
 import org.egx.notifications.entity.NewsSubscription;
-import org.egx.notifications.entity.NewsSubscriptionId;
+import org.egx.notifications.entity.SubscriptionId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface NewsSubscriptionRepository extends JpaRepository<NewsSubscription, NewsSubscriptionId> {
+@Repository("NewsSubscriptionRepository")
+public interface NewsSubscriptionRepository extends JpaRepository<NewsSubscription, SubscriptionId> {
 }
