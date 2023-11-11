@@ -1,10 +1,7 @@
 package org.egx.stocks.services;
 
-import jakarta.annotation.PostConstruct;
+import exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
-import org.egx.scraping.utils.Utils;
-import org.egx.stocks.entity.Equity;
 import org.egx.stocks.entity.UpdatedStock;
 import org.egx.stocks.repos.EquityRepository;
 import org.egx.stocks.repos.UpdatedStockRepository;
@@ -13,9 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Slf4j

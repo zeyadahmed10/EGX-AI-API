@@ -80,16 +80,6 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-  mongo:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: zeyad
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - "8888:27017"
-    volumes:
-      - mongo-dev-volume:/data
 networks:
   postgres:
     driver: bridge
@@ -100,4 +90,3 @@ volumes:
   postgres:
   pgadmin:
   timescaledb:
-  mongo-dev-volume:
