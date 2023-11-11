@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface UpdatedStockRepository extends JpaRepository<UpdatedStock, Integer> {
-    String appliedFiltersQuery = "SELECT up.* FROM updated_stock us" +
+    String appliedFiltersQuery = "SELECT us.* FROM updated_stock us" +
             " INNER JOIN equity e on us.equity_id= e.id" +
             " WHERE LOWER(e.sector) LIKE CONCAT('%',LOWER(:sectorParam),'%')" +
             " and LOWER(e.name) LIKE CONCAT('%',LOWER(:nameParam),'%')" +
