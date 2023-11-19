@@ -5,10 +5,7 @@ import org.egx.stocks.entity.UpdatedStock;
 import org.egx.stocks.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -27,8 +24,8 @@ public class StockController {
     ){
         return stockService.fetchAllStocks(sectorFilter, nameFilter,  page, size);
     }
-    @GetMapping("{code}")
-    public UpdatedStock getUpdatedStockByReutersCode(String reutersCode){
+    @GetMapping("{reutersCode}")
+    public UpdatedStock getUpdatedStockByReutersCode(@PathVariable String reutersCode){
         return stockService.getStockByReutersCode(reutersCode);
     }
 }
