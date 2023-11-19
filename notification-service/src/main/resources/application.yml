@@ -22,15 +22,15 @@ spring:
           issuer-uri: http://localhost:8080/realms/EGX-AI
   mail:
     host: smtp.gmail.com
-    port: 578
-    username: zeyad10101@gmail.com
-    password: ibdq ddvq xnss pggn
+    port: 587
+    username: egxai.notification@gmail.com
+    password: znughrhfolfvedqa
     properties:
       mail:
         smtp:
           auth: true
-        starttls:
-          enable: true
+          starttls:
+            enable: true
   flyway:
     baseline-on-migrate: true
     enabled: true
