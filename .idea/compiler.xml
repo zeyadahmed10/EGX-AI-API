@@ -21,7 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="EGX-AI" options="" />
+      <module name="EGX-AI" options="-parameters" />
       <module name="apigateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="clients" options="-parameters" />

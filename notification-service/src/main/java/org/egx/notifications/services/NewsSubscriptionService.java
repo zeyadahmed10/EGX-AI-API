@@ -20,7 +20,7 @@ public class NewsSubscriptionService implements SubscriptionService{
     @Autowired
     private NewsSubscriptionRepository subscriptionRepository;
 
-    public void subscribe(String userEmail, String name, SubscriptionRequest subscriptionRequest) {
+    public boolean subscribe(String userEmail, String name, SubscriptionRequest subscriptionRequest) {
 
         SubscribedUser subscribedUser = subscribedUserRepository.findByEmail(userEmail).orElseGet(() -> {
             return subscribedUserRepository
@@ -35,6 +35,7 @@ public class NewsSubscriptionService implements SubscriptionService{
         if(isExistedSubscription.isEmpty()) {
             subscriptionRepository.save(new NewsSubscription(subscriptionEntry));
         }
+        return true;
     }
     public void removeSubscription(String userEmail, SubscriptionRequest subscriptionRequest){
         SubscribedUser subscribedUser = subscribedUserRepository.findByEmail(userEmail).orElseThrow(() ->
@@ -46,8 +47,6 @@ public class NewsSubscriptionService implements SubscriptionService{
         //do remove subscirption
         var subscriptionEntry = new SubscriptionId(equity.getId(), subscribedUser.getId());
         var isExistedSubscription = subscriptionRepository.findById(subscriptionEntry);
-        if(isExistedSubscription.isPresent()) {
-            subscriptionRepository.delete(new NewsSubscription(subscriptionEntry));
-        }
+        isExistedSubscription.ifPresent(newsSubscription -> subscriptionRepository.delete(newsSubscription));
     }
 }

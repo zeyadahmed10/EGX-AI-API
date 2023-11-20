@@ -2,10 +2,9 @@ package org.egx.auth.controllers;
 
 
 import jakarta.validation.Valid;
-import jakarta.ws.rs.core.Response;
-import org.egx.auth.dto.LoginDto;
 import org.egx.auth.dto.SignUpDto;
 import org.egx.auth.services.KeyCloakService;
+import org.egx.auth.dto.LoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

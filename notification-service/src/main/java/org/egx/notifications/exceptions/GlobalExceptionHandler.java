@@ -1,7 +1,6 @@
 package org.egx.notifications.exceptions;
 
 
-import exceptions.PageExceeding;
 import exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,8 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<?> handleConflict(ResourceNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(value = {PageExceeding.class})
-    protected ResponseEntity<?> handleConflict(PageExceeding ex) {
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    protected ResponseEntity<?> handleConflict(IllegalArgumentException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
