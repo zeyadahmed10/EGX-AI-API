@@ -17,6 +17,7 @@
         <module>apigateway</module>
         <module>eurekaserver</module>
         <module>notification-service</module>
+        <module>recommendation-service</module>
     </modules>
     <packaging>pom</packaging>
 
