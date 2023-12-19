@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class KafkaListeners {
 
-    @KafkaListener(topics="scrapedNews", groupId = "recommendation-service-group", properties = {"spring.json.value.default.type=org.egx.clients.io.ScrapedNews"})
+    @KafkaListener(topics="news", groupId = "recommendation-service-group", properties = {"spring.json.value.default.type=org.egx.clients.io.ScrapedNews"})
     void listener(ScrapedNews scrapedNews){
         String text = "Code: " ;
     }

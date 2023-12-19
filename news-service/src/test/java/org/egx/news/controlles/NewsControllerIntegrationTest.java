@@ -1,11 +1,14 @@
 package org.egx.news.controlles;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
 import org.egx.news.repos.EquityRepository;
 import org.egx.news.repos.NewsRepository;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +16,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,13 +36,16 @@ class NewsControllerIntegrationTest {
     List<Equity> equityList = new ArrayList<>();
     List<News> newsList = new ArrayList<>();
     String[] reutersCode, names, dates, ISNs, sectors;
+    String access_token;
+    Map<String, Object> requestHeader;
+
     @Autowired
     private NewsRepository newsRepository;
     @Autowired
     private EquityRepository equityRepository;
 
     @BeforeEach
-    void createCustomNewsForTesting(){
+    void createCustomNewsForTesting() throws JSONException {
         reutersCode = new String[]{"DCRC", "ATQA"};
         names = new String[]{"Delta Construction & Rebuilding","Misr National Steel - Ataqa"};
         dates = new String[]{"12/09/1994","24/05/2006"};
@@ -61,25 +66,34 @@ class NewsControllerIntegrationTest {
         equityList.get(0).setNews(Arrays.asList(newsList.get(0), newsList.get(1)));
         equityList.get(1).setNews(Arrays.asList(newsList.get(2), newsList.get(3)));
         newsRepository.saveAll(newsList);
-
+        RestAssured.port = 8200;
+        Map<String, Object> authRequestBody = new HashMap<>();
+        authRequestBody.put("username", "test-notification");
+        authRequestBody.put("password", "password");
+        var authResponse = RestAssured.given()
+                .contentType(ContentType.JSON).body(authRequestBody)
+                .when()
+                .post("/api/v1/auth/signin");
+        assertEquals(HttpStatus.OK.value(), authResponse.getStatusCode());
+        access_token = new JSONObject(authResponse.asString()).getString("access_token");
+        requestHeader = new HashMap<String,Object>();
+        requestHeader.put("Authorization", "Bearer " + access_token);
     }
     @AfterEach
     void deleteCustomNewsList(){
         newsRepository.deleteAll(newsList);
     }
     @Test
-    void testFetchNewsAsList_whenEveryServiceWorkProperly_shouldReturn() {
-        RestAssured.baseURI = BASE_URI;
+    void testFetchNewsAsList_whenEveryServiceWorkProperly_shouldReturn() throws JSONException {
         RestAssured.port = port;
-        var response = RestAssured.get("/api/v1/news");
+        var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news");
         assertEquals(200, response.getStatusCode());
     }
     @Test
-    void testFetchNewsAsList_whenEveryServiceWorkProperlyAndCategoryParamsProvided_shouldReturnNewsWithProvidedCategory() {
-        RestAssured.baseURI = BASE_URI;
+    void testFetchNewsAsList_whenEveryServiceWorkProperlyAndCategoryParamsProvided_shouldReturnNewsWithProvidedCategory() throws JSONException {
         RestAssured.port = port;
         String params="?categoryFilter=real Estate";
-        var response = RestAssured.get("/api/v1/news"+params);
+        var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news"+params);
         assertEquals(200, response.getStatusCode());
         var news = JsonPath.from(response.asString()).getList("content",News.class);
         List<String> real = new ArrayList<>();
@@ -93,10 +107,9 @@ class NewsControllerIntegrationTest {
     }
     @Test
     void testFetchNewsAsList_whenEveryServiceWorkProperlyAndNameParamsProvided_shouldReturnNewsWithProvidedName() {
-        RestAssured.baseURI = BASE_URI;
         RestAssured.port = port;
         String params="?nameFilter=delta";
-        var response = RestAssured.get("/api/v1/news"+params);
+        var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news"+params);
         assertEquals(200, response.getStatusCode());
         var news = JsonPath.from(response.asString()).getList("content",News.class);
         List<String> real = new ArrayList<>();
@@ -109,10 +122,10 @@ class NewsControllerIntegrationTest {
     }
     @Test
     void testFetchNewsAsList_whenEveryServiceWorkProperlyAndCodeParamsProvided_shouldReturnNewsWithProvidedCode() {
-        RestAssured.baseURI = BASE_URI;
+
         RestAssured.port = port;
         String params="?reutersFilter=DCRC";
-        var response = RestAssured.get("/api/v1/news"+params);
+        var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news"+params);
         assertEquals(200, response.getStatusCode());
         var news = JsonPath.from(response.asString()).getList("content",News.class);
         List<String> real = new ArrayList<>();
@@ -125,18 +138,18 @@ class NewsControllerIntegrationTest {
     }
     @Test
     void testGetNews_whenIdProvided_shouldReturnNewsWithProvidedId() {
-        RestAssured.baseURI = BASE_URI;
+
         RestAssured.port = port;
-        var response = when().get("/api/v1/news/{id}",1)
+        var response = given().headers(requestHeader).when().get("/api/v1/news/{id}",1)
                 .then().statusCode(200)
                 .body("id",equalTo(1));
     }
 
     @Test
     void deleteNews() {
-        RestAssured.baseURI = BASE_URI;
+
         RestAssured.port = port;
-        var response = when().delete("/api/v1/news/{id}",1)
+        var response = given().headers(requestHeader).when().delete("/api/v1/news/{id}",1)
                 .then().statusCode(200);
         var news = newsRepository.findById(1);
         assertTrue(news.isEmpty());

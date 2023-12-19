@@ -13,6 +13,7 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
   timescaledb:
     container_name: timescaledb
     image: timescale/timescaledb:latest-pg15
@@ -26,6 +27,21 @@ services:
       - "5433:5432"
     networks:
       - timescaledb
+    restart: unless-stopped
+
+  pgvector:
+    container_name: pgvector
+    image: ankane/pgvector:v0.5.1
+    environment:
+      POSTGRES_USER: zeyad
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - pgvectordb:/data/postgres
+    ports:
+      - "5434:5432"
+    networks:
+      - pgvectornet
     restart: unless-stopped
   pgadmin:
     container_name: pgadmin
@@ -41,6 +57,7 @@ services:
     networks:
       - postgres
       - timescaledb
+      - pgvectornet
     restart: unless-stopped
 
   keycloak:
@@ -85,8 +102,11 @@ networks:
     driver: bridge
   timescaledb:
     driver: bridge
+  pgvectornet:
+    driver: bridge
 
 volumes:
   postgres:
   pgadmin:
   timescaledb:
+  pgvectordb:
