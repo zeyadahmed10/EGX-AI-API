@@ -1,4 +1,4 @@
-package org.egx.news.controlles;
+package org.egx.news.controllers;
 
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;

@@ -1,4 +1,4 @@
-package org.egx.news.controlles;
+package org.egx.news.controllers;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

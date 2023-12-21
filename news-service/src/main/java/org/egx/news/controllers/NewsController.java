@@ -1,9 +1,11 @@
-package org.egx.news.controlles;
+package org.egx.news.controllers;
 
 import org.egx.news.entity.News;
 import org.egx.news.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,11 +25,11 @@ public class NewsController {
                                                 @RequestParam(defaultValue = "") String nameFilter,
                                                 @RequestParam(defaultValue = "") String reutersFilter,
                                                 @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size) {
+                                                @RequestParam(defaultValue = "10") int size, @AuthenticationPrincipal Jwt jwt) {
         return newsService.fetchNewsAsList(categoryFilter, nameFilter, reutersFilter, page, size);
     }
     @GetMapping("/{id}")
-    public News getNews(@PathVariable Integer id){
+    public News getNews(@PathVariable Integer id, @AuthenticationPrincipal Jwt jwt){
         return newsService.getNewsById(id);
     }
     @DeleteMapping("/{id}")
