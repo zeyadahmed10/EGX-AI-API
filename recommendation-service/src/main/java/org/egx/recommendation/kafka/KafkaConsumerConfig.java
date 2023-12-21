@@ -2,7 +2,7 @@ package org.egx.recommendation.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.egx.clients.io.ScrapedNews;
+import org.egx.clients.io.UserBehaviorEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,13 +30,13 @@ public class KafkaConsumerConfig {
         return props;
     }
     @Bean
-    public ConsumerFactory<String, ScrapedNews> consumerFactory(){
+    public ConsumerFactory<String, UserBehaviorEvent> consumerFactory(){
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, ScrapedNews>> kafkaListenerContainerFactory(ConsumerFactory<String,ScrapedNews> consumerFactory){
-        ConcurrentKafkaListenerContainerFactory<String,ScrapedNews> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UserBehaviorEvent>> kafkaListenerContainerFactory(ConsumerFactory<String,UserBehaviorEvent> consumerFactory){
+        ConcurrentKafkaListenerContainerFactory<String, UserBehaviorEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
     }
