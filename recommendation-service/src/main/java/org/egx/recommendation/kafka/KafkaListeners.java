@@ -6,6 +6,8 @@ import ai.djl.translate.TranslateException;
 import lombok.extern.slf4j.Slf4j;
 import org.egx.clients.io.BaseNews;
 import org.egx.clients.io.UserBehaviorEvent;
+import org.egx.recommendation.repos.NewsEmbeddingRepository;
+import org.egx.recommendation.repos.UserHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,10 @@ import org.springframework.stereotype.Component;
 public class KafkaListeners {
     @Autowired
     private Predictor<String, float[]> sentenceTransformerPredictor;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+    @Autowired
+    private NewsEmbeddingRepository newsEmbeddingRepository;
     @KafkaListener(topics="user-behavior", groupId = "recommendation-service-group",
             containerFactory = "kafkaUserBehaviorListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.UserBehaviorEvent"})
     void userBehaviorListener(UserBehaviorEvent userBehaviorEvent){
