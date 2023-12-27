@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import io.restassured.path.json.JsonPath;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.egx.clients.io.BaseNews;
 import org.egx.clients.io.UserBehaviorEvent;
 import org.egx.news.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @Aspect
 @Component
+@Slf4j
 public class UserBehaviorAspect {
     public List<News> getNewsList(Object result) throws JsonProcessingException {
         List<News> newsList = new ArrayList<News>();
@@ -41,7 +44,7 @@ public class UserBehaviorAspect {
         return null;
     }
     @Autowired
-    private KafkaTemplate<String, UserBehaviorEvent> kafkaTemplate;
+    private KafkaTemplate<String, UserBehaviorEvent> kafkaUserBehaviorTemplate;
 
     @AfterReturning(pointcut = "( execution(* org.egx.news.controllers.NewsController.fetchNewsAsList (..)) "
     +"|| execution(* org.egx.news.controllers.NewsController.getNews (..)))", returning = "result")
@@ -49,7 +52,9 @@ public class UserBehaviorAspect {
         String userEmail = getUserEmail(joinPoint);
         List<News> newsList = getNewsList(result);
         for(var news: newsList){
-            kafkaTemplate.send("user-behavior", new UserBehaviorEvent(userEmail, news));
+            var baseNews = new BaseNews(news.getId(), news.getTitle(), news.getArticle(), news.getTime());
+            kafkaUserBehaviorTemplate.send("user-behavior", new UserBehaviorEvent(userEmail, baseNews));
+            log.info("User Behavior sent for news with id: " + news.getId());
         }
     }
 }

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaConsumerConfig {
+public class KafkaUserBehaviorConsumerConfig {
 
     @Value("${spring.kafka.bootstrap.servers}")
     private String bootstrapServers;
@@ -30,14 +30,14 @@ public class KafkaConsumerConfig {
         return props;
     }
     @Bean
-    public ConsumerFactory<String, UserBehaviorEvent> consumerFactory(){
+    public ConsumerFactory<String, UserBehaviorEvent> userBehaviorConsumerFactory(){
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UserBehaviorEvent>> kafkaListenerContainerFactory(ConsumerFactory<String,UserBehaviorEvent> consumerFactory){
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UserBehaviorEvent>> kafkaUserBehaviorListenerContainerFactory(ConsumerFactory<String,UserBehaviorEvent> userBehaviorConsumerFactory){
         ConcurrentKafkaListenerContainerFactory<String, UserBehaviorEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory);
+        factory.setConsumerFactory(userBehaviorConsumerFactory);
         return factory;
     }
 }

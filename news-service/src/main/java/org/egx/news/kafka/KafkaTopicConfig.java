@@ -11,4 +11,8 @@ public class KafkaTopicConfig {
     public NewTopic userBehaviorTopic(){
         return TopicBuilder.name("user-behavior").build();
     }
+    @Bean
+    public NewTopic newsVectorizedTopic(){
+        return TopicBuilder.name("news-vectorized").build();
+    }
 }
