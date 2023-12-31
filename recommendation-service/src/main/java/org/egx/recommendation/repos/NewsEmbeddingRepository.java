@@ -12,7 +12,7 @@ import java.util.List;
 public interface NewsEmbeddingRepository extends JpaRepository<NewsEmbedding, Integer> {
     String KNearestNeighborsQuery = "select * from news_embedding ne order by ne.embedding <-> " +
             "(select us.embedding from user_history us where us.email= :emailParam ) LIMIT :kParam";
-    Page<NewsEmbedding> findAllByHitsDesc(Pageable pageable);
+    Page<NewsEmbedding> findAllByOrderByHitsDesc(Pageable pageable);
     @Query(nativeQuery = true, value = KNearestNeighborsQuery)
     List<NewsEmbedding> findKNearestNeighbors(@Param("emailParam")String userEmail, @Param("kParam") int k);
 }
