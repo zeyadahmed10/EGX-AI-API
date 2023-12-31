@@ -5,12 +5,12 @@ create table if not exists user_history
 (
     id integer not null,
     email varchar(255),
-    embedding vector(3),
+    embedding vector(768),
     primary key (id)
 );
 create table if not exists news_embedding
 (
     id integer not null,
-    embedding vector(3),
+    embedding vector(768),
     primary key (id)
 );
