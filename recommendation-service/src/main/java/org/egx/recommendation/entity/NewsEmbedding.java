@@ -18,7 +18,7 @@ import java.util.List;
 public class NewsEmbedding {
     @Id
     private Integer id;
-
+    private Integer hits;
     @Basic
     @Type(JsonType.class)
     @Column(name = "embedding", columnDefinition = "vector")
