@@ -12,5 +12,6 @@ create table if not exists news_embedding
 (
     id integer not null,
     embedding vector(768),
+    hits integer,
     primary key (id)
 );
