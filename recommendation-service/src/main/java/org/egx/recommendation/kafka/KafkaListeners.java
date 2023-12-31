@@ -36,18 +36,20 @@ public class KafkaListeners {
     void userBehaviorListener(UserBehaviorEvent userBehaviorEvent){
         String userEmail = userBehaviorEvent.getUserEmail();
         Integer newsId = userBehaviorEvent.getNews().getId();
-        List<Double> newsEmbedding = newsEmbeddingRepository.findById(newsId).orElseThrow(
+        var newsEntity = newsEmbeddingRepository.findById(newsId).orElseThrow(
                     ()-> {
                         log.error("Could not find embedding for news with id " + newsId);
                         return new ResourceNotFoundException("Could not find embedding for news with id: "+newsId);
                     }
-            ).getEmbedding();
+            );
+        newsEntity.setHits(newsEntity.getHits()+1);
+        newsEmbeddingRepository.save(newsEntity);
         if(!userHistoryRepository.existsByEmail(userBehaviorEvent.getUserEmail())){
-            userHistoryRepository.save(UserHistory.builder().email(userEmail).embedding(newsEmbedding).build());
+            userHistoryRepository.save(UserHistory.builder().email(userEmail).embedding(newsEntity.getEmbedding()).build());
             return;
         }
         var userHistoryEntity = userHistoryRepository.findByEmail(userEmail).get();
-        var updatedEmbedding = smoothUserEmbedding(newsEmbedding,userHistoryEntity.getEmbedding());
+        var updatedEmbedding = smoothUserEmbedding(newsEntity.getEmbedding(),userHistoryEntity.getEmbedding());
         //TODO: update user embedding
         List<Double> updatedUserEmbedding = DoubleStream.of(updatedEmbedding).boxed().collect(Collectors.toList());
         userHistoryEntity.setEmbedding(updatedUserEmbedding);
@@ -61,7 +63,7 @@ public class KafkaListeners {
         String toBeTranslated = "title: "+news.getTitle()+" ,topic: "+news.getArticle();
         var rawEmbedding = sentenceTransformerPredictor.predict(toBeTranslated);
         List<Double> embedding = new ArrayList<>(Arrays.asList(getFloatArrayAsDouble(rawEmbedding)));
-        newsEmbeddingRepository.save(new NewsEmbedding(news.getId(), embedding));
+        newsEmbeddingRepository.save(new NewsEmbedding(news.getId(), 0, embedding));
         log.info("News with id: "+news.getId() +" embedding is saved");
     }
     public static Double getFloatAsDouble(float value){
