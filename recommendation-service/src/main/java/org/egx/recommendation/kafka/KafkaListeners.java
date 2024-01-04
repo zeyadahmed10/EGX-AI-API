@@ -6,7 +6,7 @@ import ai.djl.ndarray.NDManager;
 import ai.djl.translate.TranslateException;
 import exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.egx.clients.io.BaseNews;
+import org.egx.clients.io.NewsDto;
 import org.egx.clients.io.UserBehaviorEvent;
 import org.egx.recommendation.entity.NewsEmbedding;
 import org.egx.recommendation.entity.UserHistory;
@@ -56,11 +56,11 @@ public class KafkaListeners {
         userHistoryRepository.save(userHistoryEntity);
     }
     @KafkaListener(topics="news-vectorized", groupId = "recommendation-service-group",
-            containerFactory = "kafkaBaseNewsListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.UserBehaviorEvent"})
-    void baseNewsListener(BaseNews news) throws TranslateException {
+            containerFactory = "kafkaNewsListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.NewsDto"})
+    void newsListener(NewsDto news) throws TranslateException {
         if(newsEmbeddingRepository.existsById(news.getId()))
             return;
-        String toBeTranslated = "title: "+news.getTitle()+" ,topic: "+news.getArticle();
+        String toBeTranslated = "name: "+news.getName()+", sector: "+news.getSector()+", title: "+news.getTitle()+", topic: "+news.getArticle();
         var rawEmbedding = sentenceTransformerPredictor.predict(toBeTranslated);
         List<Double> embedding = new ArrayList<>(Arrays.asList(getFloatArrayAsDouble(rawEmbedding)));
         newsEmbeddingRepository.save(new NewsEmbedding(news.getId(), 0, embedding));
