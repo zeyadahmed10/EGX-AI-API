@@ -2,7 +2,7 @@ package org.egx.recommendation.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.egx.clients.io.BaseNews;
+import org.egx.clients.io.NewsDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaBaseNewsConsumerConfig {
+public class KafkaNewsConsumerConfig {
 
     @Value("${spring.kafka.bootstrap.servers}")
     private String bootstrapServers;
@@ -30,14 +30,14 @@ public class KafkaBaseNewsConsumerConfig {
         return props;
     }
     @Bean
-    public ConsumerFactory<String, BaseNews> baseNewsConsumerFactory(){
+    public ConsumerFactory<String, NewsDto> newsConsumerFactory(){
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, BaseNews>> kafkaBaseNewsListenerContainerFactory(ConsumerFactory<String,BaseNews> baseNewsConsumerFactory){
-        ConcurrentKafkaListenerContainerFactory<String, BaseNews> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(baseNewsConsumerFactory);
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, NewsDto>> kafkaBaseNewsListenerContainerFactory(ConsumerFactory<String,NewsDto> newsConsumerFactory){
+        ConcurrentKafkaListenerContainerFactory<String, NewsDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(newsConsumerFactory);
         return factory;
     }
 }
