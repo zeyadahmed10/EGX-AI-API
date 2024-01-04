@@ -4,6 +4,7 @@ import exceptions.ResourceNotFoundException;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
 import org.egx.news.repos.NewsRepository;
+import org.egx.news.utils.NewsToDtoMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,9 +71,10 @@ class NewsServiceUnitTest {
         int start = (int) pageable.getOffset();
         int end = Math.min(start+pageable.getPageSize(), newsList.size());
         List<News> pageContent = newsList.subList(start, end);
-        var expected = new PageImpl<>(pageContent,pageable,newsList.size());
+        var newsPage = new PageImpl<>(pageContent,pageable,newsList.size());
+        var expected = NewsToDtoMapper.map(newsPage);
         //act
-        doReturn(expected).when(newsRepository).findAllByFilters(
+        doReturn(newsPage).when(newsRepository).findAllByFilters(
                 any(String.class),any(String.class),any(String.class),any(Pageable.class)
         );
         var actual = newsService.fetchNewsAsList("", "","", 0,2);
@@ -82,15 +85,29 @@ class NewsServiceUnitTest {
     @Test
     void testGetNewsById_whenIdProvidedIsCorrect_shouldReturnNewsObject() {
         Optional<News> expectedNews = Optional.of(newsList.get(0));
+        var expectedNewsDto = NewsToDtoMapper.map(expectedNews.get());
         doReturn(expectedNews).when(newsRepository).findById(any(Integer.class));
         var realNews = newsService.getNewsById(0);
-        assertEquals(expectedNews.get(), realNews);
+        assertEquals(expectedNewsDto, realNews);
     }
     @Test
     void testGetNewsById_whenIdProvidedIsNotCorrect_shouldThrowResourceNotFoundException() {
         Optional<News> expectedNews = Optional.empty();
         doReturn(expectedNews).when(newsRepository).findById(any(Integer.class));
         assertThrows(ResourceNotFoundException.class,()->newsService.getNewsById(5));
+    }
+    @Test
+    void testFindNewsByIdsList_whenListOfIds_shouldReturnNewsListWithSameIdsIfExisted(){
+        List<Integer> idsList = new ArrayList<Integer>(Arrays.asList(0,1));
+        int page = 0;
+        int size = 2;
+        Pageable pageable = PageRequest.of(page, size);
+        List<News> pageContent = newsList.subList(0, 2);
+        var newsPage = new PageImpl<>(pageContent,pageable,newsList.size());
+        doReturn(newsPage).when(newsRepository).findByIdIn(idsList,pageable);
+        var expected = NewsToDtoMapper.map(newsPage);
+        var actual = newsService.findNewsByIdsList(idsList, page, size);
+        assertEquals(expected, actual);
     }
 
 }
