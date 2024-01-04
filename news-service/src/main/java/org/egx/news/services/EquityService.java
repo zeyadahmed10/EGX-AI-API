@@ -3,9 +3,11 @@ package org.egx.news.services;
 import exceptions.PageExceeding;
 import exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.egx.clients.io.NewsDto;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
 import org.egx.news.repos.EquityRepository;
+import org.egx.news.utils.NewsToDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -57,7 +59,7 @@ public class EquityService {
         equityRepository.deleteByReutersCode(code);
     }
 
-    public Page<News> getNewsByCode(String code, int page, int size) {
+    public Page<NewsDto> getNewsByCode(String code, int page, int size) {
 
         Pageable pageRequest = PageRequest.of(page, size);
 
@@ -71,6 +73,7 @@ public class EquityService {
         int end = Math.min((start + pageRequest.getPageSize()), allNews.size());
 
         List<News> pageContent = allNews.subList(start, end);
-        return new PageImpl<>(pageContent, pageRequest, allNews.size());
+        var newsPage = new PageImpl<>(pageContent, pageRequest, allNews.size());
+        return NewsToDtoMapper.map(newsPage);
     }
 }

@@ -1,7 +1,7 @@
 package org.egx.news.controllers;
 
+import org.egx.clients.io.NewsDto;
 import org.egx.news.entity.Equity;
-import org.egx.news.entity.News;
 import org.egx.news.services.EquityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,8 +34,8 @@ public class EquityController {
     }
 
     @GetMapping("/{code}/news")
-    public Page<News> getNews(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "5") int size, @PathVariable("code") String code){
+    public Page<NewsDto> getNews(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "5") int size, @PathVariable("code") String code){
         return equityService.getNewsByCode(code, page, size);
     }
 
