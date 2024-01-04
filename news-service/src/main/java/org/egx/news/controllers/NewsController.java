@@ -2,12 +2,13 @@ package org.egx.news.controllers;
 
 import org.egx.clients.io.NewsDto;
 import org.egx.news.services.NewsService;
-import org.egx.news.utils.NewsToDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/news")
@@ -27,12 +28,16 @@ public class NewsController {
                                          @RequestParam(defaultValue = "") String reutersFilter,
                                          @RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size, @AuthenticationPrincipal Jwt jwt) {
-        var newsPage = newsService.fetchNewsAsList(categoryFilter, nameFilter, reutersFilter, page, size);
-        return NewsToDtoMapper.map(newsPage);
+        return newsService.fetchNewsAsList(categoryFilter, nameFilter, reutersFilter, page, size);
     }
     @GetMapping("/{id}")
     public NewsDto getNews(@PathVariable Integer id, @AuthenticationPrincipal Jwt jwt){
-        return NewsToDtoMapper.map(newsService.getNewsById(id));
+        return newsService.getNewsById(id);
+    }
+    @GetMapping("/ids")
+    public Page<NewsDto> getNewsByIds(@RequestBody List<Integer> idsList, @RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "5") int size){
+        return newsService.findNewsByIdsList(idsList, page, size);
     }
     @DeleteMapping("/{id}")
     public void deleteNews(@PathVariable Integer id){

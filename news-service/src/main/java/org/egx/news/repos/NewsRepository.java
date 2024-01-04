@@ -24,5 +24,5 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
                                           @Param("nameParam")String equityNameFilter,
                                           @Param("codeParam")String equityReutersFilter, Pageable pageable);
 
-    List<News> findByIdIn(List<Integer> idsList);
+    Page<News> findByIdIn(List<Integer> idsList, Pageable pageable);
 }
