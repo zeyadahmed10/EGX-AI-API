@@ -25,7 +25,6 @@ public class EquityController {
 
     @GetMapping("/{code}")
     public Equity getEquity(@PathVariable("code") String code){
-        System.out.println(equityService.getEquityByReutersCode(code).getNews());
         return equityService.getEquityByReutersCode(code);
     }
 
