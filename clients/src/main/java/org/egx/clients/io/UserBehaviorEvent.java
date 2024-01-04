@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserBehaviorEvent {
     String userEmail;
-    BaseNews news;
+    NewsDto news;
 }

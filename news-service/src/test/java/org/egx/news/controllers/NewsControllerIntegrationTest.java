@@ -3,6 +3,7 @@ package org.egx.news.controllers;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import org.egx.clients.io.NewsDto;
 import org.egx.news.entity.Equity;
 import org.egx.news.entity.News;
 import org.egx.news.repos.EquityRepository;
@@ -95,11 +96,11 @@ class NewsControllerIntegrationTest {
         String params="?categoryFilter=real Estate";
         var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news"+params);
         assertEquals(200, response.getStatusCode());
-        var news = JsonPath.from(response.asString()).getList("content",News.class);
+        var news = JsonPath.from(response.asString()).getList("content", NewsDto.class);
         List<String> real = new ArrayList<>();
         List<String> expected = new ArrayList<>();
         for(var item: news){
-            real.add(item.getEquity().getSector());
+            real.add(item.getSector());
             expected.add("Real Estate");
         }
         assertEquals(expected, real);
@@ -108,14 +109,14 @@ class NewsControllerIntegrationTest {
     @Test
     void testFetchNewsAsList_whenEveryServiceWorkProperlyAndNameParamsProvided_shouldReturnNewsWithProvidedName() {
         RestAssured.port = port;
-        String params="?nameFilter=delta";
+        String params="?nameFilter=delta construc";
         var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news"+params);
         assertEquals(200, response.getStatusCode());
-        var news = JsonPath.from(response.asString()).getList("content",News.class);
+        var news = JsonPath.from(response.asString()).getList("content",NewsDto.class);
         List<String> real = new ArrayList<>();
         List<String> expected = new ArrayList<>();
         for(var item: news){
-            real.add(item.getEquity().getName());
+            real.add(item.getName());
             expected.add("Delta Construction & Rebuilding");
         }
         assertEquals(expected, real);
@@ -127,11 +128,11 @@ class NewsControllerIntegrationTest {
         String params="?reutersFilter=DCRC";
         var response = RestAssured.given().headers(requestHeader).when().get("/api/v1/news"+params);
         assertEquals(200, response.getStatusCode());
-        var news = JsonPath.from(response.asString()).getList("content",News.class);
+        var news = JsonPath.from(response.asString()).getList("content",NewsDto.class);
         List<String> real = new ArrayList<>();
         List<String> expected = new ArrayList<>();
         for(var item: news){
-            real.add(item.getEquity().getReutersCode());
+            real.add(item.getReutersCode());
             expected.add("DCRC");
         }
         assertEquals(expected, real);

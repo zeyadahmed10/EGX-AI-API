@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NewsToDtoMapper {
     public static NewsDto map(News news){
-        return new NewsDto(news.getId(), news.getTitle(), news.getArticle(), news.getTime(), news.getEquity().getReutersCode(), news.getEquity().getSector());
+        return new NewsDto(news.getId(), news.getTitle(), news.getArticle(), news.getTime(), news.getEquity().getReutersCode(), news.getEquity().getSector(), news.getEquity().getName());
     }
     public static Page<NewsDto> map(Page<News> newsPage){
         var newsPageList = newsPage.getContent();

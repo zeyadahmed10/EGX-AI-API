@@ -2,7 +2,7 @@ package org.egx.news.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.egx.clients.io.BaseNews;
+import org.egx.clients.io.NewsDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaBaseNewsProducerConfig {
+public class KafkaNewsProducerConfig {
     @Value("${spring.kafka.bootstrap.servers}")
     private String bootstrapServers;
 
@@ -27,12 +27,12 @@ public class KafkaBaseNewsProducerConfig {
         return props;
     }
     @Bean
-    public ProducerFactory<String, BaseNews> producerBaseNewsFactory(){
+    public ProducerFactory<String, NewsDto> producerBaseNewsFactory(){
         return new DefaultKafkaProducerFactory<>(produceConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, BaseNews> kafkaBaseNewsTemplate(){
+    public KafkaTemplate<String, NewsDto> kafkaBaseNewsTemplate(){
         return new KafkaTemplate<>(producerBaseNewsFactory());
     }
 

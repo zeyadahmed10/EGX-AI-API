@@ -8,9 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.egx.clients.io.BaseNews;
+import org.egx.clients.io.NewsDto;
 import org.egx.clients.io.UserBehaviorEvent;
-import org.egx.news.entity.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -23,14 +22,14 @@ import java.util.List;
 @Component
 @Slf4j
 public class UserBehaviorAspect {
-    public List<News> getNewsList(Object result) throws JsonProcessingException {
-        List<News> newsList = new ArrayList<News>();
-        if(result instanceof News)
-            newsList.add((News)result);
+    public List<NewsDto> getNewsList(Object result) throws JsonProcessingException {
+        List<NewsDto> newsList = new ArrayList<NewsDto>();
+        if(result instanceof NewsDto)
+            newsList.add((NewsDto)result);
         else{
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(result);
-            newsList.addAll(JsonPath.from(json).getList("content",News.class));
+            newsList.addAll(JsonPath.from(json).getList("content",NewsDto.class));
         }
         return newsList;
     }
@@ -50,10 +49,9 @@ public class UserBehaviorAspect {
     +"|| execution(* org.egx.news.controllers.NewsController.getNews (..)))", returning = "result")
     public void after(JoinPoint joinPoint, Object result) throws JsonProcessingException {
         String userEmail = getUserEmail(joinPoint);
-        List<News> newsList = getNewsList(result);
+        List<NewsDto> newsList = getNewsList(result);
         for(var news: newsList){
-            var baseNews = new BaseNews(news.getId(), news.getTitle(), news.getArticle(), news.getTime());
-            kafkaUserBehaviorTemplate.send("user-behavior", new UserBehaviorEvent(userEmail, baseNews));
+            kafkaUserBehaviorTemplate.send("user-behavior", new UserBehaviorEvent(userEmail, news));
             log.info("User Behavior sent for news with id: " + news.getId());
         }
     }

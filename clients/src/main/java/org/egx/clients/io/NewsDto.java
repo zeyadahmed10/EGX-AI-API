@@ -18,4 +18,5 @@ public class NewsDto {
     private Timestamp time;
     private String reutersCode;
     private String sector;
+    private String name;
 }
