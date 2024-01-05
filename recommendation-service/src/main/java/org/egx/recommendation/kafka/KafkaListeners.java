@@ -13,7 +13,6 @@ import org.egx.recommendation.entity.UserHistory;
 import org.egx.recommendation.repos.NewsEmbeddingRepository;
 import org.egx.recommendation.repos.UserHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,8 +30,8 @@ public class KafkaListeners {
     private UserHistoryRepository userHistoryRepository;
     @Autowired
     private NewsEmbeddingRepository newsEmbeddingRepository;
-    @KafkaListener(topics="user-behavior", groupId = "recommendation-service-group",
-            containerFactory = "kafkaUserBehaviorListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.UserBehaviorEvent"})
+    //@KafkaListener(topics="user-behavior", groupId = "recommendation-service-group",
+    //        containerFactory = "kafkaUserBehaviorListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.UserBehaviorEvent"})
     void userBehaviorListener(UserBehaviorEvent userBehaviorEvent){
         String userEmail = userBehaviorEvent.getUserEmail();
         Integer newsId = userBehaviorEvent.getNews().getId();
@@ -55,8 +54,8 @@ public class KafkaListeners {
         userHistoryEntity.setEmbedding(updatedUserEmbedding);
         userHistoryRepository.save(userHistoryEntity);
     }
-    @KafkaListener(topics="news-vectorized", groupId = "recommendation-service-group",
-            containerFactory = "kafkaNewsListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.NewsDto"})
+    //@KafkaListener(topics="news-vectorized", groupId = "recommendation-service-group",
+    //        containerFactory = "kafkaNewsListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.NewsDto"})
     void newsListener(NewsDto news) throws TranslateException {
         if(newsEmbeddingRepository.existsById(news.getId()))
             return;

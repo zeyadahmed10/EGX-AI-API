@@ -35,9 +35,9 @@ public class NewsController {
         return newsService.getNewsById(id);
     }
     @GetMapping("/ids")
-    public Page<NewsDto> getNewsByIds(@RequestBody List<Integer> idsList, @RequestParam(defaultValue = "0") int page,
+    public Page<NewsDto> getNewsByIds(@RequestParam List<Integer> values, @RequestParam(defaultValue = "0") int page,
                                       @RequestParam(defaultValue = "5") int size){
-        return newsService.findNewsByIdsList(idsList, page, size);
+        return newsService.findNewsByIdsList(values, page, size);
     }
     @DeleteMapping("/{id}")
     public void deleteNews(@PathVariable Integer id){
