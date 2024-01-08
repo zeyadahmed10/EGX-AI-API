@@ -54,6 +54,7 @@ public class KafkaListeners {
         List<Double> updatedUserEmbedding = DoubleStream.of(updatedEmbedding).boxed().collect(Collectors.toList());
         userHistoryEntity.setEmbedding(updatedUserEmbedding);
         userHistoryRepository.save(userHistoryEntity);
+        log.info("User history updated");
     }
     @KafkaListener(topics="news-vectorized", groupId = "recommendation-service-group",
             containerFactory = "kafkaNewsListenerContainerFactory",properties = {"spring.json.value.default.type=org.egx.clients.io.NewsDto"})
