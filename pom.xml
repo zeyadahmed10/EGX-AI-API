@@ -99,7 +99,7 @@
                         <execution>
                             <phase>package</phase>
                             <goals>
-                                <goal>build</goal>
+                                <goal>dockerBuild</goal> <!--dockerBuild to build locally build to build and push-->
                             </goals>
                         </execution>
                     </executions>
