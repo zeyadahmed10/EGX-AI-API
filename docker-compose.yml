@@ -111,6 +111,7 @@ services:
       - "8761:8761"
     networks:
       - spring
+
   apigateway:
     image: apigateway:latest
     container_name: apigateway
@@ -122,6 +123,22 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - eureka
+
+  scraping-service:
+    image: scraping-service:latest
+    container_name: scraping-service
+    ports:
+      - "8000:8000"
+    networks:
+      - spring
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - eureka
+      - postgres
+      - kafka
+
   auth-service:
     image: auth-service:latest
     container_name: auth-service
@@ -134,6 +151,7 @@ services:
     depends_on:
       - keycloak
       - eureka
+
   news-service:
     image: news-service:latest
     container_name: news-service
@@ -149,6 +167,7 @@ services:
       - eureka
       - postgres
       - kafka
+
   notification-service:
     image: notification-service:latest
     container_name: notification-service
@@ -164,6 +183,7 @@ services:
       - eureka
       - postgres
       - kafka
+
   recommendation-service:
     image: recommendation-service:latest
     container_name: recommendation-service
@@ -179,6 +199,7 @@ services:
       - eureka
       - pgvector
       - kafka
+
 networks:
   postgres:
     driver: bridge
