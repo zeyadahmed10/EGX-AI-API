@@ -75,6 +75,7 @@ services:
       - "8080:8080"
     networks:
       - postgres
+      - spring
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
@@ -87,7 +88,7 @@ services:
 
   kafka:
     image: wurstmeister/kafka:latest
-    container_name: kafka-analytical-pipeline
+    container_name: kafka
     depends_on:
       - zookeeper
     ports:
@@ -100,6 +101,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - spring
 #configuration to EGX-AI services
   eureka:
     image: eurekaserver:latest
@@ -131,6 +134,21 @@ services:
     depends_on:
       - keycloak
       - eureka
+  news-service:
+    image: news-service:latest
+    container_name: news-service
+    ports:
+      - "8300:8300"
+    networks:
+      - spring
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - keycloak
+      - eureka
+      - postgres
+      - kafka
 networks:
   postgres:
     driver: bridge

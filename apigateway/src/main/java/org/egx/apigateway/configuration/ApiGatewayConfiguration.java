@@ -16,11 +16,11 @@ public class ApiGatewayConfiguration {
         return routeLocatorBuilder.routes()
                 .route(p->p.path("/api/v1/auth/**").uri("lb://auth-service"))
                 .route(p->p.path("/api/v1/equities/**").uri("lb://news-service"))
-                .route(p->p.path("/api/v/news/**").uri("lb://news-service"))
-                .route(p->p.path("/api/v1/notifications/").uri("lb://notification-service"))
-                .route(p->p.path("/api/v1/recommendations").uri("lb://recommendation-service"))
-                .route(p->p.path("/api/v1/historical-stocks").uri("lb://stocks-service"))
-                .route(p->p.path("/api/v/stocks").uri("lb://stocks-service"))
+                .route(p->p.path("/api/v1/news/**").uri("lb://news-service"))
+                .route(p->p.path("/api/v1/notifications/**").uri("lb://notification-service"))
+                .route(p->p.path("/api/v1/recommendations/**").uri("lb://recommendation-service"))
+                .route(p->p.path("/api/v1/historical-stocks/**").uri("lb://stocks-service"))
+                .route(p->p.path("/api/v/stocks/**").uri("lb://stocks-service"))
                 .build();
     }
 }
