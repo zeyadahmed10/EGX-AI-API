@@ -99,12 +99,33 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#configuration to EGX-AI services
+  eureka:
+    image: eurekaserver:latest
+    container_name: eurekaserver
+    ports:
+      - "8761:8761"
+    networks:
+      - spring
+  apigateway:
+    image: apigateway:latest
+    container_name: apigateway
+    ports:
+      - "8083:8083"
+    networks:
+      - spring
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - eureka
 networks:
   postgres:
     driver: bridge
   timescaledb:
     driver: bridge
   pgvectornet:
+    driver: bridge
+  spring:
     driver: bridge
 
 volumes:
