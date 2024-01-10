@@ -43,7 +43,7 @@ services:
     ports:
       - "5434:5432"
     networks:
-      - pgvectornet
+      - pgvector
     restart: unless-stopped
   pgadmin:
     container_name: pgadmin
@@ -59,7 +59,7 @@ services:
     networks:
       - postgres
       - timescaledb
-      - pgvectornet
+      - pgvector
     restart: unless-stopped
 
   keycloak:
@@ -149,12 +149,42 @@ services:
       - eureka
       - postgres
       - kafka
+  notification-service:
+    image: notification-service:latest
+    container_name: notification-service
+    ports:
+      - "8400:8400"
+    networks:
+      - spring
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - keycloak
+      - eureka
+      - postgres
+      - kafka
+  recommendation-service:
+    image: recommendation-service:latest
+    container_name: recommendation-service
+    ports:
+      - "8500:8500"
+    networks:
+      - spring
+      - pgvector
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - keycloak
+      - eureka
+      - pgvector
+      - kafka
 networks:
   postgres:
     driver: bridge
   timescaledb:
     driver: bridge
-  pgvectornet:
+  pgvector:
     driver: bridge
   spring:
     driver: bridge

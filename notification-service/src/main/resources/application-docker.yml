@@ -1,0 +1,48 @@
+server:
+  port: 8400
+spring:
+  application:
+    name: notification-service
+  kafka:
+    bootstrap:
+      servers: https://kafka:9092
+  datasource:
+    url: jdbc:postgresql://postgres:5432/notifications
+    username: zeyad
+    password: password
+  jpa:
+    database: POSTGRESQL
+    show-sql : false
+    hibernate:
+      ddl-auto: validate
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/EGX-AI
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: egxai.notification@gmail.com
+    password: znughrhfolfvedqa
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    url: jdbc:postgresql://postgres:5432/notifications
+    user: zeyad
+    password: password
+    sql-migration-prefix: V
+    repeatable-sql-migration-prefix: R
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+eureka:
+  client:
+  serviceUrl:
+    defaultZone: http://eurekaserver:8761/eureka
+
