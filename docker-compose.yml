@@ -139,6 +139,21 @@ services:
       - postgres
       - kafka
 
+  stocks-service:
+    image: stocks-service:latest
+    container_name: stocks-service
+    ports:
+      - "8100:8100"
+    networks:
+      - spring
+      - timescaledb
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - eureka
+      - timescaledb
+      - kafka
+
   auth-service:
     image: auth-service:latest
     container_name: auth-service
