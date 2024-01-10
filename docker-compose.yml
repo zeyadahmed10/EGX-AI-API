@@ -119,6 +119,18 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - eureka
+  auth-service:
+    image: auth-service:latest
+    container_name: auth-service
+    ports:
+      - "8200:8200"
+    networks:
+      - spring
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - keycloak
+      - eureka
 networks:
   postgres:
     driver: bridge
