@@ -63,6 +63,7 @@ services:
     restart: unless-stopped
 
   keycloak:
+    container_name: keycloak
     image: docker.io/bitnami/keycloak:22
     environment:
       KEYCLOAK_DATABASE_HOST: postgres
