@@ -1,0 +1,120 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:alpine3.18
+    environment:
+      POSTGRES_USER: zeyad
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  timescaledb:
+    container_name: timescaledb
+    image: timescale/timescaledb:latest-pg15
+    environment:
+      POSTGRES_USER: zeyad
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - timescaledb:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - timescaledb
+    restart: unless-stopped
+
+  pgvector:
+    container_name: pgvector
+    image: ankane/pgvector:v0.5.1
+    environment:
+      POSTGRES_USER: zeyad
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - pgvectordb:/data/postgres
+    expose:
+      - "5432"
+    ports:
+      - "5434:5432"
+    networks:
+      - pgvector
+    restart: unless-stopped
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@postgres.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+      - timescaledb
+      - pgvector
+    restart: unless-stopped
+
+  keycloak:
+    image: docker.io/bitnami/keycloak:22
+    environment:
+      KEYCLOAK_DATABASE_HOST: postgres
+      KEYCLOAK_DATABASE_USER: zeyad
+      KEYCLOAK_DATABASE_PASSWORD: password
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper-analytical-pipeline
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - spring
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - spring
+networks:
+  postgres:
+    driver: bridge
+  timescaledb:
+    driver: bridge
+  pgvector:
+    driver: bridge
+  spring:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  timescaledb:
+  pgvectordb:
