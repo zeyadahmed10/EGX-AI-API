@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - postgresDev:/data/postgres
     ports:
       - "5432:5432"
     networks:
@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:
-      - timescaledb:/data/postgres
+      - timescaledbDev:/data/postgres
     ports:
       - "5433:5432"
     networks:
@@ -37,7 +37,7 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /data/postgres
     volumes:
-      - pgvectordb:/data/postgres
+      - pgvectordbDev:/data/postgres
     expose:
       - "5432"
     ports:
@@ -53,7 +53,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: password
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
-      - pgadmin:/var/lib/pgadmin
+      - pgadminDev:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
@@ -114,7 +114,7 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
-  pgadmin:
-  timescaledb:
-  pgvectordb:
+  postgresDev:
+  pgadminDev:
+  timescaledbDev:
+  pgvectordbDev:
