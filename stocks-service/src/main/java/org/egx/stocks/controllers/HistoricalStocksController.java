@@ -30,6 +30,7 @@ public class HistoricalStocksController {
     )
     @GetMapping("/{reutersCode}")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class)))
+    @ApiResponse(responseCode = "404", description = "Stock/Equity not found")
     Page<OHCLVStatistics> getOHCLVStatistics(
             @PathVariable("reutersCode") String reutersCode,
             @RequestParam(defaultValue = "30 minutes") String periodParam,

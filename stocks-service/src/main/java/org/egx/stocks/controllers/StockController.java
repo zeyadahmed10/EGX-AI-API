@@ -40,7 +40,7 @@ public class StockController {
     )
     @GetMapping("/{reutersCode}")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdatedStock.class)))
-    @ApiResponse(responseCode = "404", description = "Stock not found")
+    @ApiResponse(responseCode = "404", description = "Stock/Equity not found")
     public UpdatedStock getUpdatedStockByReutersCode(@PathVariable String reutersCode){
         return stockService.getStockByReutersCode(reutersCode);
     }
