@@ -5,6 +5,7 @@ import org.egx.news.entity.Equity;
 import org.egx.news.services.EquityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,7 +28,7 @@ public class EquityController {
     public Equity getEquity(@PathVariable("code") String code){
         return equityService.getEquityByReutersCode(code);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @DeleteMapping("/{code}")
     public void deleteEquity(@PathVariable("code") String code){
         equityService.deleteEquityByReutersCode(code);

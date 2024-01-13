@@ -4,6 +4,7 @@ import org.egx.clients.io.NewsDto;
 import org.egx.news.services.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,7 @@ public class NewsController {
                                       @RequestParam(defaultValue = "5") int size){
         return newsService.findNewsByIdsList(values, page, size);
     }
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @DeleteMapping("/{id}")
     public void deleteNews(@PathVariable Integer id){
         newsService.deleteNewsById(id);
