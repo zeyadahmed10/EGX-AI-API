@@ -1,6 +1,7 @@
 package org.egx.recommendation.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,8 +30,11 @@ public class NewsRecommendationController {
     @GetMapping
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized")
-    Page<NewsDto> getNewsRecommendations(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "5") int size, @AuthenticationPrincipal Jwt jwt){
+    Page<NewsDto> getNewsRecommendations(
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(defaultValue = "5") int size,
+            @Parameter(hidden = true) @AuthenticationPrincipal Jwt jwt
+    ){
         String userEmail = String.valueOf(jwt.getClaims().get("email"));
         return newsRecommendationService.getNewsRecommendations(page, size, userEmail);
     }

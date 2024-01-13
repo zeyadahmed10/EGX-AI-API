@@ -1,6 +1,7 @@
 package org.egx.stocks.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,10 +28,10 @@ public class StockController {
     @GetMapping
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class)))
     public Page<UpdatedStock> fetchAllStocks(
-            @RequestParam(defaultValue = "") String sectorFilter,
-            @RequestParam(defaultValue = "") String nameFilter,
-            @RequestParam(defaultValue = "0" ) int page,
-            @RequestParam(defaultValue = "10") int size
+            @Parameter(description = "Filter by sector", example = "Real Estate") @RequestParam(defaultValue = "") String sectorFilter,
+            @Parameter(description = "Filter by name", example = "Delta Construction") @RequestParam(defaultValue = "") String nameFilter,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size
     ){
         return stockService.fetchAllStocks(sectorFilter, nameFilter,  page, size);
     }
@@ -41,7 +42,8 @@ public class StockController {
     @GetMapping("/{reutersCode}")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UpdatedStock.class)))
     @ApiResponse(responseCode = "404", description = "Stock/Equity not found")
-    public UpdatedStock getUpdatedStockByReutersCode(@PathVariable String reutersCode){
+    public UpdatedStock getUpdatedStockByReutersCode(@Parameter(description = "Reuters code of the stock", example = "DCRC") @PathVariable String reutersCode
+    ){
         return stockService.getStockByReutersCode(reutersCode);
     }
 }

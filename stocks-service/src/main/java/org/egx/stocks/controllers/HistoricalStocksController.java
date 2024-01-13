@@ -1,6 +1,7 @@
 package org.egx.stocks.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,11 +33,12 @@ public class HistoricalStocksController {
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class)))
     @ApiResponse(responseCode = "404", description = "Stock/Equity not found")
     Page<OHCLVStatistics> getOHCLVStatistics(
-            @PathVariable("reutersCode") String reutersCode,
-            @RequestParam(defaultValue = "30 minutes") String periodParam,
-            @RequestParam(defaultValue = "1 weeks") String intervalParam,
-            @RequestParam(defaultValue = "0" ) int page,
-            @RequestParam(defaultValue = "10") int size){
+            @Parameter(description = "Reuters code of the stock", example = "DCRC") @PathVariable("reutersCode") String reutersCode,
+            @Parameter(description = "Time period for data aggregation", example = "30 minutes") @RequestParam(defaultValue = "30 minutes") String periodParam,
+            @Parameter(description = "Interval for data retrieval", example = "1 weeks") @RequestParam(defaultValue = "1 weeks") String intervalParam,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Page size") @RequestParam(defaultValue = "10") int size
+    ){
         return historicalStockService.getOHCLVStatistics(reutersCode, periodParam, intervalParam, size, page);
     }
 }
