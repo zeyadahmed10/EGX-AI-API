@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
         name = "ODIC",
         description = "OpenID Connect Auth",
         scheme = "bearer",
-        type = SecuritySchemeType.OPENIDCONNECT,
+        type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER
 )

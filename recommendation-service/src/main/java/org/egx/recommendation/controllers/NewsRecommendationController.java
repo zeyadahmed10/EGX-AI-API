@@ -28,6 +28,7 @@ public class NewsRecommendationController {
     )
     @GetMapping
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Page.class)))
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
     Page<NewsDto> getNewsRecommendations(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "5") int size, @AuthenticationPrincipal Jwt jwt){
         String userEmail = String.valueOf(jwt.getClaims().get("email"));
