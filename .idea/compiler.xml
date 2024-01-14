@@ -15,6 +15,7 @@
         <module name="stocks-service" />
         <module name="custom-kafkaIO" />
         <module name="scraping-service" />
+        <module name="openapi-centralized-doc-service" />
         <module name="notification-service" />
         <module name="recommendation-service" />
       </profile>
@@ -22,7 +23,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="EGX-AI" options="-parameters" />
+      <module name="EGX-AI" options="" />
       <module name="apigateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="clients" options="-parameters" />
@@ -30,6 +31,7 @@
       <module name="eurekaserver" options="-parameters" />
       <module name="news-service" options="-parameters" />
       <module name="notification-service" options="-parameters" />
+      <module name="openapi-centralized-doc-service" options="-parameters" />
       <module name="recommendation-service" options="-parameters" />
       <module name="scraping-service" options="-parameters" />
       <module name="stocks-service" options="-parameters" />
