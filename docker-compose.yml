@@ -106,7 +106,7 @@ services:
       - spring
 #configuration to EGX-AI services
   eureka:
-    image: eurekaserver:latest
+    image: zeyadahmedcs/eurekaserver:latest
     container_name: eurekaserver
     ports:
       - "8761:8761"
@@ -114,7 +114,7 @@ services:
       - spring
 
   apigateway:
-    image: apigateway:latest
+    image: zeyadahmedcs/apigateway:latest
     container_name: apigateway
     ports:
       - "8083:8083"
@@ -126,7 +126,7 @@ services:
       - eureka
 
   scraping-service:
-    image: scraping-service:latest
+    image: zeyadahmedcs/scraping-service:latest
     container_name: scraping-service
     ports:
       - "8000:8000"
@@ -141,7 +141,7 @@ services:
       - kafka
 
   stocks-service:
-    image: stocks-service:latest
+    image: zeyadahmedcs/stocks-service:latest
     container_name: stocks-service
     ports:
       - "8100:8100"
@@ -156,7 +156,7 @@ services:
       - kafka
 
   auth-service:
-    image: auth-service:latest
+    image: zeyadahmedcs/auth-service:latest
     container_name: auth-service
     ports:
       - "8200:8200"
@@ -169,7 +169,7 @@ services:
       - eureka
 
   news-service:
-    image: news-service:latest
+    image: zeyadahmedcs/news-service:latest
     container_name: news-service
     ports:
       - "8300:8300"
@@ -185,7 +185,7 @@ services:
       - kafka
 
   notification-service:
-    image: notification-service:latest
+    image: zeyadahmedcs/notification-service:latest
     container_name: notification-service
     ports:
       - "8400:8400"
@@ -201,7 +201,7 @@ services:
       - kafka
 
   recommendation-service:
-    image: recommendation-service:latest
+    image: zeyadahmedcs/recommendation-service:latest
     container_name: recommendation-service
     ports:
       - "8500:8500"
