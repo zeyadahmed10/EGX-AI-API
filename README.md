@@ -6,8 +6,8 @@ The project follows a modern event driven microservice architecture, ensuring sc
 To simplify the deployment and management processes, the services are containerized using Docker. This approach allows for easy setup and ensures consistent execution across different environments.
 
 ## Table of contents
-- [Features](##features)
-- [Installation](##installation)
+- [Features](#features)
+- [Installation](#installation)
 - [usage](#usage)
 - [Project Architecture](#project-architecture)
 - [Tools and Technologies](#tools-and-technologies)
@@ -57,7 +57,7 @@ The Swagger documentation provides detailed information about each endpoint and 
 - **Api Gateway:** single entry point for all incoming requests, and routes requests to the appropriate microservice.
 - **Eureka Server:** naming server for registering microservices and load balancing.
 
-![micro](https://github.com/zeyadahmed10/Ecommerce-Rest-Mircorservice-RecommendationSystem/blob/master/Ecommerce-microservice2.png)
+![micro](https://github.com/zeyadahmed10/EGX-AI-API/blob/main/EGX-AI-archi.png)
 
 ## Tools and Technologies
 - **Java 17**
