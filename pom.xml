@@ -27,6 +27,7 @@
         <spring-boot.version>3.1.2</spring-boot.version>
         <spring.boot.maven.plugin.version>3.1.2</spring.boot.maven.plugin.version>
         <image>${project.artifactId}:${project.version}</image>
+        <!--add this when pushing to docker <image>zeyadahmedcs/${project.artifactId}:${project.version}</image> -->
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -99,7 +100,7 @@
                         <execution>
                             <phase>package</phase>
                             <goals>
-                                <goal>dockerBuild</goal> <!--dockerBuild to build locally build to build and push-->
+                                <goal>build</goal> <!--dockerBuild to build locally build to build and push-->
                             </goals>
                         </execution>
                     </executions>
