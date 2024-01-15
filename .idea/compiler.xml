@@ -15,11 +15,13 @@
         <module name="stocks-service" />
         <module name="custom-kafkaIO" />
         <module name="scraping-service" />
-        <module name="openapi-centralized-doc-service" />
         <module name="notification-service" />
         <module name="recommendation-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="openapi-centralized-doc-service" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
